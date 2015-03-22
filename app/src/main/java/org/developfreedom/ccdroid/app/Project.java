@@ -1,5 +1,6 @@
 package org.developfreedom.ccdroid.app;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@AllArgsConstructor
 public class Project {
     String name;
     String activity;
