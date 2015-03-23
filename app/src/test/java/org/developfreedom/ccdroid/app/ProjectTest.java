@@ -2,22 +2,32 @@ package org.developfreedom.ccdroid.app;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(RobolectricTestRunner.class)
 public class ProjectTest {
     Project project;
 
     @Before
     public void setUp() throws Exception {
-        project = new Project();
+        project = new Project(
+                "shubhamchaudhary/wordpowermadeeasy",
+                "Sleeping",
+                "Success",
+                "31",
+                "2015-03-22T11:32:14.000+0000",
+                "https://travis-ci.org/shubhamchaudhary/wordpowermadeeasy"
+        );
 
-        project.setName("shubhamchaudhary/wordpowermadeeasy");
-        project.setActivity("Sleeping");
-        project.setLastBuildStatus("Success");
-        project.setLastBuildLabel("31");
-        project.setLastBuildTime("2015-03-22T11:32:14.000+0000");
-        project.setWebUrl("https://travis-ci.org/shubhamchaudhary/wordpowermadeeasy");
+        //project.setName("shubhamchaudhary/wordpowermadeeasy");
+        //project.setActivity("Sleeping");
+        //project.setLastBuildStatus("Success");
+        //project.setLastBuildLabel("31");
+        //project.setLastBuildTime("2015-03-22T11:32:14.000+0000");
+        //project.setWebUrl("https://travis-ci.org/shubhamchaudhary/wordpowermadeeasy");
     }
 
     @Test
