@@ -1,15 +1,13 @@
 package org.developfreedom.ccdroid.app;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * Created by shubham on 22/03/15.
- */
 @Getter
 @Setter
-@AllArgsConstructor
+//@AllArgsConstructor
+@NoArgsConstructor
 public class Project {
     String name;
     String activity;
@@ -17,4 +15,13 @@ public class Project {
     String lastBuildStatus;
     String lastBuildTime;
     String webUrl;
+
+    public Project(String a, String b, String c, String d, String e, String f) {
+        this.name = a;
+        this.activity = b;
+        this.lastBuildLabel = c;
+        this.lastBuildStatus = d;
+        this.lastBuildTime = e;
+        this.webUrl = f;
+    }
 }

@@ -4,9 +4,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.assertEquals;
 
+@Config(emulateSdk = 18)
 @RunWith(RobolectricTestRunner.class)
 public class ProjectTest {
     Project project;
@@ -16,8 +18,8 @@ public class ProjectTest {
         project = new Project(
                 "shubhamchaudhary/wordpowermadeeasy",
                 "Sleeping",
-                "Success",
                 "31",
+                "Success",
                 "2015-03-22T11:32:14.000+0000",
                 "https://travis-ci.org/shubhamchaudhary/wordpowermadeeasy"
         );
