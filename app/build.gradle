@@ -47,14 +47,9 @@ dependencies {
     compile 'com.android.support:support-v4:22.0.0'
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile 'org.projectlombok:lombok:1.14.8'
-    testCompile 'org.projectlombok:lombok:1.14.8'
-    androidTestCompile 'org.projectlombok:lombok:1.14.8'
     compile 'org.mockito:mockito-all:1.8.4'
 
     testCompile 'junit:junit:4.10'
     testCompile 'org.robolectric:robolectric:2.4'
-
-    androidTestCompile 'junit:junit:4.10'
-    androidTestCompile 'org.robolectric:robolectric:2.4'
-    androidTestCompile 'org.mockito:mockito-all:1.8.4'
+    testCompile 'org.mockito:mockito-all:1.8.4'
 }
