@@ -1,22 +1,20 @@
 package org.developfreedom.ccdroid.app;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.view.*;
 import android.widget.TextView;
+
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity
@@ -143,6 +141,40 @@ public class MainActivity extends ActionBarActivity
             super.onAttach(activity);
             ((MainActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
+        }
+    }
+
+    public void onClickRefresh(View view) {
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            // fetch data
+            String projectUrl = "https://snap-ci.com/hwEMz49fQYcu2gA_wLEMTE3lF53Xx5BMrxyCTm0heEk/cctray.xml";
+            DownloadXmlTask downloadXmlTask = new DownloadXmlTask();
+            downloadXmlTask.execute(projectUrl);
+        } else {
+            // display error
+        }
+    }
+
+    private class DownloadXmlTask extends AsyncTask<String, Void, String> {
+        List<Project> projects;
+        @Override
+        protected String doInBackground(String... urls) {
+            String projectUrl = urls[0];
+            ProjectParser projectParser = new ProjectParser(projectUrl);
+            projects = projectParser.fetch();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            TextView textView = (TextView) findViewById(R.id.textview_top);
+            textView.setText("");
+            for (Project project : projects) {
+                textView.append(project.getName());
+            }
         }
     }
 
