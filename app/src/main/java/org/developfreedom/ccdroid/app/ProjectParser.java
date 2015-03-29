@@ -1,6 +1,5 @@
 package org.developfreedom.ccdroid.app;
 
-import android.content.Context;
 import android.util.Log;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -12,7 +11,6 @@ import java.util.List;
 
 public class ProjectParser extends XmlFeedReader {
     private static String TAG = ProjectParser.class.getSimpleName();
-    private Context context;
     private String url;
 
     public ProjectParser(String projectUrl) {
@@ -28,12 +26,9 @@ public class ProjectParser extends XmlFeedReader {
         return null;
     }
 
-    // Given a URL, establishes an HttpUrlConnection and retrieves
-    // the web page content as a InputStream, which it returns as
-    // a string.
     private List downloadUrl(String myurl) throws IOException {
         InputStream is = null;
-        List contentAsString = null;
+        List projectList = null;
 
         try {
             Log.d(TAG, "Parsing " + myurl);
@@ -51,10 +46,8 @@ public class ProjectParser extends XmlFeedReader {
 
             // Convert the InputStream into a string
             Log.d(TAG, "InputStream has " + is.available() + " available bytes");
-            contentAsString = parse(is);
-
-            // Makes sure that the InputStream is closed after the app is
-            // finished using it.
+            projectList = parse(is);
+            conn.disconnect();
         } catch (XmlPullParserException e) {
             e.printStackTrace();
         } finally {
@@ -62,6 +55,6 @@ public class ProjectParser extends XmlFeedReader {
                 is.close();
             }
         }
-        return contentAsString;
+        return projectList;
     }
 }
