@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.view.*;
 import android.widget.TextView;
 
@@ -171,6 +172,7 @@ public class MainActivity extends ActionBarActivity
         @Override
         protected void onPostExecute(String result) {
             TextView textView = (TextView) findViewById(R.id.textview_top);
+            textView.setMovementMethod(new ScrollingMovementMethod());
             textView.setText("");
             for (Project project : projects) {
                 textView.append(project.getName());
