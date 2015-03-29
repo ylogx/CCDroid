@@ -10,10 +10,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor(suppressConstructorProperties = true)
 public class Project {
-    String name;
-    String activity;
-    String lastBuildLabel;
-    String lastBuildStatus;
-    String lastBuildTime;
-    String webUrl;
+    private String name;
+    private String activity;
+    private String lastBuildLabel;
+    private String lastBuildStatus;
+    private String lastBuildTime;
+    private String webUrl;
 }
