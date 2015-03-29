@@ -30,21 +30,4 @@
                 android:gravity="center"/>
     </LinearLayout>
 
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_weight=".2"
-            android:gravity="center|bottom"
-            android:orientation="vertical" >
-       <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="145dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|center"
-                android:onClick="onClickRefresh"
-                android:text="@string/button_refresh"
-                android:id="@+id/button_refresh"
-                />
-    </LinearLayout>
-
 </LinearLayout>

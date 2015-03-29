@@ -2,14 +2,13 @@
 <resources>
 
     <string name="app_name">CCDroid</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_drawer_item1">All Projects</string>
+    <string name="title_drawer_item2">TODO</string>
+    <string name="title_drawer_item0">Add New Url</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_example">Example action</string>
+    <string name="action_refresh">Refresh</string>
     <string name="action_settings">Settings</string>
-    <string name="default_textview_text">No Status Yet</string>
-    <string name="button_refresh">Refresh</string>
+    <string name="default_textview_text">Press Refresh</string>
 
 </resources>
