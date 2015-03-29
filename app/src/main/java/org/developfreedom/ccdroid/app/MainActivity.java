@@ -175,7 +175,14 @@ public class MainActivity extends ActionBarActivity
             textView.setMovementMethod(new ScrollingMovementMethod());
             textView.setText("");
             for (Project project : projects) {
-                textView.append(project.getName());
+                textView.append(
+                        project.getActivity()
+                        + " :: "
+                        + project.getName()
+                        + " == "
+                        + project.getLastBuildStatus()
+                        + "\n"
+                );
             }
         }
     }
