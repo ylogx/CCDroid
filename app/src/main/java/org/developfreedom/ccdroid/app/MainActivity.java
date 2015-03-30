@@ -198,19 +198,22 @@ public class MainActivity extends ActionBarActivity
                     hashMap.put("flag", Integer.toString(R.drawable.button_grey));
                 }
                 hashMap.put("name", project.getName());
-                hashMap.put("detail", project.getActivity() + " : " + project.getLastBuildTime());
+                hashMap.put("activity", project.getActivity());
+                hashMap.put("time", project.getLastBuildTime());
                 dataList.add(hashMap);
             }
 
             String[] keysInDataHashmap = {
                     "flag",
                     "name",
-                    "detail"
+                    "activity",
+                    "time"
             };
             int[] valuesIdInListviewLayout = {
                     R.id.lw_status_flag,
                     R.id.lw_project_name,
-                    R.id.lw_project_detail
+                    R.id.lw_project_activity,
+                    R.id.lw_project_time
             };
 
             // Instantiating an adapter to store each items
