@@ -11,11 +11,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.text.method.ScrollingMovementMethod;
 import android.view.*;
-import android.widget.TextView;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -31,6 +33,8 @@ public class MainActivity extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private ListView projectsListView;
+    private static String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,7 @@ public class MainActivity extends ActionBarActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+        refresh();
     }
 
     @Override
@@ -178,19 +183,45 @@ public class MainActivity extends ActionBarActivity
 
         @Override
         protected void onPostExecute(String result) {
-            TextView textView = (TextView) findViewById(R.id.textview_top);
-            textView.setMovementMethod(new ScrollingMovementMethod());
-            textView.setText("");
+            List<HashMap<String,String>> dataList = new ArrayList<HashMap<String,String>>();
+
             for (Project project : projects) {
-                textView.append(
-                        project.getActivity()
-                        + " :: "
-                        + project.getName()
-                        + " == "
-                        + project.getLastBuildStatus()
-                        + "\n"
-                );
+                HashMap<String, String> hashMap = new HashMap<String,String>();
+                String lastBuildStatus = project.getLastBuildStatus();
+                if (lastBuildStatus.equals("Success")) {
+                    hashMap.put("flag", Integer.toString(R.drawable.button_green));
+                } else if (lastBuildStatus.equals("Failure")) {
+                    hashMap.put("flag", Integer.toString(R.drawable.button_red));
+                } else if (lastBuildStatus.equals("Unknown")) {
+                    hashMap.put("flag", Integer.toString(R.drawable.button_yellow));
+                } else {
+                    hashMap.put("flag", Integer.toString(R.drawable.button_grey));
+                }
+                hashMap.put("name", project.getName());
+                hashMap.put("detail", project.getActivity() + " : " + project.getLastBuildTime());
+                dataList.add(hashMap);
             }
+
+            String[] keysInDataHashmap = {
+                    "flag",
+                    "name",
+                    "detail"
+            };
+            int[] valuesIdInListviewLayout = {
+                    R.id.lw_status_flag,
+                    R.id.lw_project_name,
+                    R.id.lw_project_detail
+            };
+
+            // Instantiating an adapter to store each items
+            // R.layout.listview_layout defines the layout of each item
+            SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), dataList, R.layout.list_row_layout_project, keysInDataHashmap, valuesIdInListviewLayout);
+
+            // Getting a reference to listview of main.xml layout file
+            projectsListView = (ListView) findViewById(R.id.fragment_listview_projects);
+
+            // Setting the adapter to the listView
+            projectsListView.setAdapter(adapter);
         }
     }
 

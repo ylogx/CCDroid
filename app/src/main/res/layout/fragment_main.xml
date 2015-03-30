@@ -21,13 +21,11 @@
             android:layout_weight="1.8"
             android:gravity="center|bottom"
             android:orientation="vertical" >
-            <TextView
+        <ListView
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:text="@string/default_textview_text"
-                android:id="@+id/textview_top"
-                android:scrollbars="vertical"
-                android:gravity="center"/>
+                android:layout_height="wrap_content"
+                android:id="@+id/fragment_listview_projects"
+                />
     </LinearLayout>
 
 </LinearLayout>
