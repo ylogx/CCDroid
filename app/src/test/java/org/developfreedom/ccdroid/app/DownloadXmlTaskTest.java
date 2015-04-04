@@ -9,19 +9,33 @@ import org.robolectric.annotation.Config;
 import java.util.List;
 
 import static java.util.Arrays.asList;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.*;
 
 @Config(emulateSdk = 18)
 @RunWith(RobolectricTestRunner.class)
 public class DownloadXmlTaskTest {
     private OnDownloadTaskCompleted onDownloadTaskCompleted;
     private DownloadXmlTask downloadXmlTask;
+    private ProjectParser parser;
 
     @Before
     public void setUp() throws Exception {
         onDownloadTaskCompleted = mock(OnDownloadTaskCompleted.class);
-        downloadXmlTask = new DownloadXmlTask(onDownloadTaskCompleted);
+        parser = mock(ProjectParser.class);
+        downloadXmlTask = new DownloadXmlTask(onDownloadTaskCompleted, parser);
+    }
+
+    @Test
+    public void testThatProjectListIsFetchedInBackgroundThread() throws Exception {
+        String url = "https://snap-ci.com/hwEMz49fQYcu2gA_wLEMTE3lF53Xx5BMrxyCTm0heEk/cctray.xml";
+        List<Project> expectedProjects = asList(new Project(), new Project());
+        when(parser.fetch(url)).thenReturn(expectedProjects);
+
+        List<Project> projects = downloadXmlTask.doInBackground(url);
+
+        assertThat(projects, is(expectedProjects));
     }
 
     @Test

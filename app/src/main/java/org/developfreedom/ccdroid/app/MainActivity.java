@@ -166,7 +166,7 @@ public class MainActivity
         if (networkInfo != null && networkInfo.isConnected()) {
             // fetch data
             String projectUrl = "https://snap-ci.com/hwEMz49fQYcu2gA_wLEMTE3lF53Xx5BMrxyCTm0heEk/cctray.xml";
-            DownloadXmlTask downloadXmlTask = new DownloadXmlTask(this);
+            DownloadXmlTask downloadXmlTask = new DownloadXmlTask(this, new ProjectParser());
             downloadXmlTask.execute(projectUrl);
         } else {
             // display error

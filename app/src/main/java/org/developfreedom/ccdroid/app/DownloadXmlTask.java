@@ -6,16 +6,17 @@ import java.util.List;
 
 public class DownloadXmlTask extends AsyncTask<String, Void, List> {
     private OnDownloadTaskCompleted onDownloadTaskCompleted;
+    private ProjectParser projectParser;
 
-    public DownloadXmlTask(OnDownloadTaskCompleted onDownloadTaskCompleted) {
+    public DownloadXmlTask(OnDownloadTaskCompleted onDownloadTaskCompleted, ProjectParser projectParser) {
         this.onDownloadTaskCompleted = onDownloadTaskCompleted;
+        this.projectParser = projectParser;
     }
 
     @Override
     protected List doInBackground(String... urls) {
         String projectUrl = urls[0];
-        ProjectParser projectParser = new ProjectParser(projectUrl);
-        return projectParser.fetch();
+        return projectParser.fetch(projectUrl);
     }
 
     @Override

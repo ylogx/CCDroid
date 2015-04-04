@@ -11,13 +11,8 @@ import java.util.List;
 
 public class ProjectParser extends XmlFeedReader {
     private static String TAG = ProjectParser.class.getSimpleName();
-    private String url;
 
-    public ProjectParser(String projectUrl) {
-        this.url = projectUrl;
-    }
-
-    public List<Project> fetch() {
+    public List<Project> fetch(String url) {
         try {
             return downloadUrl(url);
         } catch (IOException e) {
