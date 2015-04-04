@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,8 +20,11 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity
+        extends ActionBarActivity
+        implements
+            NavigationDrawerFragment.NavigationDrawerCallbacks,
+            OnDownloadTaskCompleted {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -164,68 +166,56 @@ public class MainActivity extends ActionBarActivity
         if (networkInfo != null && networkInfo.isConnected()) {
             // fetch data
             String projectUrl = "https://snap-ci.com/hwEMz49fQYcu2gA_wLEMTE3lF53Xx5BMrxyCTm0heEk/cctray.xml";
-            DownloadXmlTask downloadXmlTask = new DownloadXmlTask();
+            DownloadXmlTask downloadXmlTask = new DownloadXmlTask(this);
             downloadXmlTask.execute(projectUrl);
         } else {
             // display error
         }
     }
 
-    private class DownloadXmlTask extends AsyncTask<String, Void, String> {
-        List<Project> projects;
-        @Override
-        protected String doInBackground(String... urls) {
-            String projectUrl = urls[0];
-            ProjectParser projectParser = new ProjectParser(projectUrl);
-            projects = projectParser.fetch();
-            return null;
-        }
+    public void updateListView(List<Project> projects) {
+        List<HashMap<String,String>> dataList = new ArrayList<HashMap<String,String>>();
 
-        @Override
-        protected void onPostExecute(String result) {
-            List<HashMap<String,String>> dataList = new ArrayList<HashMap<String,String>>();
-
-            for (Project project : projects) {
-                HashMap<String, String> hashMap = new HashMap<String,String>();
-                String lastBuildStatus = project.getLastBuildStatus();
-                if (lastBuildStatus.equals("Success")) {
-                    hashMap.put("flag", Integer.toString(R.drawable.button_green));
-                } else if (lastBuildStatus.equals("Failure")) {
-                    hashMap.put("flag", Integer.toString(R.drawable.button_red));
-                } else if (lastBuildStatus.equals("Unknown")) {
-                    hashMap.put("flag", Integer.toString(R.drawable.button_yellow));
-                } else {
-                    hashMap.put("flag", Integer.toString(R.drawable.button_grey));
-                }
-                hashMap.put("name", project.getName());
-                hashMap.put("activity", project.getActivity());
-                hashMap.put("time", project.getLastBuildTime());
-                dataList.add(hashMap);
+        for (Project project : projects) {
+            HashMap<String, String> hashMap = new HashMap<String,String>();
+            String lastBuildStatus = project.getLastBuildStatus();
+            if (lastBuildStatus.equals("Success")) {
+                hashMap.put("flag", Integer.toString(R.drawable.button_green));
+            } else if (lastBuildStatus.equals("Failure")) {
+                hashMap.put("flag", Integer.toString(R.drawable.button_red));
+            } else if (lastBuildStatus.equals("Unknown")) {
+                hashMap.put("flag", Integer.toString(R.drawable.button_yellow));
+            } else {
+                hashMap.put("flag", Integer.toString(R.drawable.button_grey));
             }
-
-            String[] keysInDataHashmap = {
-                    "flag",
-                    "name",
-                    "activity",
-                    "time"
-            };
-            int[] valuesIdInListviewLayout = {
-                    R.id.lw_status_flag,
-                    R.id.lw_project_name,
-                    R.id.lw_project_activity,
-                    R.id.lw_project_time
-            };
-
-            // Instantiating an adapter to store each items
-            // R.layout.listview_layout defines the layout of each item
-            SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), dataList, R.layout.list_row_layout_project, keysInDataHashmap, valuesIdInListviewLayout);
-
-            // Getting a reference to listview of main.xml layout file
-            projectsListView = (ListView) findViewById(R.id.fragment_listview_projects);
-
-            // Setting the adapter to the listView
-            projectsListView.setAdapter(adapter);
+            hashMap.put("name", project.getName());
+            hashMap.put("activity", project.getActivity());
+            hashMap.put("time", project.getLastBuildTime());
+            dataList.add(hashMap);
         }
+
+        String[] keysInDataHashmap = {
+                "flag",
+                "name",
+                "activity",
+                "time"
+        };
+        int[] valuesIdInListviewLayout = {
+                R.id.lw_status_flag,
+                R.id.lw_project_name,
+                R.id.lw_project_activity,
+                R.id.lw_project_time
+        };
+
+        // Instantiating an adapter to store each items
+        // R.layout.listview_layout defines the layout of each item
+        SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), dataList, R.layout.list_row_layout_project, keysInDataHashmap, valuesIdInListviewLayout);
+
+        // Getting a reference to listview of main.xml layout file
+        projectsListView = (ListView) findViewById(R.id.fragment_listview_projects);
+
+        // Setting the adapter to the listView
+        projectsListView.setAdapter(adapter);
     }
 
 }
