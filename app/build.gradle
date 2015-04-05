@@ -61,6 +61,10 @@ buildscript {
     }
 }
 
+coveralls {
+    jacocoReportPath 'build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml'
+}
+
 def coverageSourceDirs = [
         'src/main/java',
         'src/gen'
