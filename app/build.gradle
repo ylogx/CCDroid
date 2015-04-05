@@ -1,17 +1,5 @@
-//buildscript {
-//    repositories {
-//        jcenter()
-//    }
-//    dependencies {
-//        classpath 'com.android.tools.build:gradle:1.0.0'
-//    }
-//}
 apply plugin: 'com.android.application'
 apply plugin: 'jacoco'
-
-//repositories {
-//    jcenter()
-//}
 
 android {
     compileSdkVersion 22
@@ -29,10 +17,6 @@ android {
         exclude 'LICENSE'
     }
 
-//    compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_1_6
-//        targetCompatibility JavaVersion.VERSION_1_6
-//    }
     buildTypes {
         release {
             minifyEnabled false
@@ -78,7 +62,6 @@ task jacocoTestReport(type: JacocoReport, dependsOn: "testDebug") {
         xml.enabled = true
     }
 
-    // Class R is used, but usage will not be covered, so ignore this class from report
     classDirectories = fileTree(
             dir: './build/intermediates/classes/debug',
             excludes: ['**/R.class',
