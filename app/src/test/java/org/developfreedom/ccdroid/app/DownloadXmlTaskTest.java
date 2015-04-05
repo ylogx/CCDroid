@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import java.util.List;
 
@@ -13,7 +12,6 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
-@Config(emulateSdk = 18)
 @RunWith(RobolectricTestRunner.class)
 public class DownloadXmlTaskTest {
     private OnDownloadTaskCompleted onDownloadTaskCompleted;
