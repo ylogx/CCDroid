@@ -8,5 +8,5 @@ CCDroid is the CCMenu of Android.
 
 
 ###Links
-(Homepage)[https://ccdroid.github.io]  
-(Source)[https://github.com/CCDroid]  
+[Homepage](https://ccdroid.github.io)  
+[Source](https://github.com/CCDroid)  
