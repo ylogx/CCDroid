@@ -36,14 +36,16 @@
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:layout_weight="1"
-                    android:layout_gravity="start"/>
+                    android:layout_gravity="start"
+                    />
             <TextView
                     android:id="@+id/lw_project_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:layout_weight="1"
-                    android:layout_gravity="end"/>
+                    android:layout_gravity="end"
+                    />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

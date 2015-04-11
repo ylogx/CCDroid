@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.*;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -160,6 +161,7 @@ public class MainActivity
     }
 
     public void refresh() {
+        Log.v(TAG, "Refreshing");
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -169,11 +171,12 @@ public class MainActivity
             DownloadXmlTask downloadXmlTask = new DownloadXmlTask(this, new ProjectParser());
             downloadXmlTask.execute(projectUrl);
         } else {
-            // display error
+            Log.v(TAG, "refresh: No Network");
         }
     }
 
     public void updateListView(List<Project> projects) {
+        Log.v(TAG, "Starting listview update");
         List<HashMap<String,String>> dataList = new ArrayList<HashMap<String,String>>();
 
         for (Project project : projects) {
@@ -209,13 +212,12 @@ public class MainActivity
 
         // Instantiating an adapter to store each items
         // R.layout.listview_layout defines the layout of each item
-        SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), dataList, R.layout.list_row_layout_project, keysInDataHashmap, valuesIdInListviewLayout);
+        SimpleAdapter adapterToStoreAllDataToBeShown = new SimpleAdapter(getBaseContext(), dataList, R.layout.list_row_layout_project, keysInDataHashmap, valuesIdInListviewLayout);
 
-        // Getting a reference to listview of main.xml layout file
         projectsListView = (ListView) findViewById(R.id.fragment_listview_projects);
 
-        // Setting the adapter to the listView
-        projectsListView.setAdapter(adapter);
+        projectsListView.setAdapter(adapterToStoreAllDataToBeShown);
+        Log.v(TAG, "Adapter set to projects listview has " + adapterToStoreAllDataToBeShown.getCount() + " items");
     }
 
 }
