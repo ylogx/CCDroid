@@ -20,6 +20,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+@Ignore
 @RunWith(RobolectricTestRunner.class)
 @Config(reportSdk = 18)
 public class MainActivityTest //extends FragmentTestCase<NavigationDrawerFragment>
@@ -53,7 +54,6 @@ public class MainActivityTest //extends FragmentTestCase<NavigationDrawerFragmen
         assertTrue(true);
     }
 
-    @Ignore
     @Test
     public void shouldUpdateListViewWithProperData() throws Exception {
         String name = "shubhamchaudhary/wordpowermadeeasy";
