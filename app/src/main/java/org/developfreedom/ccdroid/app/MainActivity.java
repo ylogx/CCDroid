@@ -1,7 +1,9 @@
 package org.developfreedom.ccdroid.app;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -10,15 +12,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.*;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.Toast;
+import android.widget.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class MainActivity
@@ -183,6 +185,39 @@ public class MainActivity
 
         projectsListView.setAdapter(adapter);
         Log.v(TAG, "Adapter set to projects listview has " + adapter.getCount() + " items");
+
+        projectsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                Log.v(TAG, "Listview item clicked");
+                ListAdapter adapter = projectsListView.getAdapter();
+                final Map<String, String> clickedItem = (Map<String, String>) adapter.getItem(position);
+                AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                alert.setTitle("Details");
+                String details = "";
+                for (String key: clickedItem.keySet()) {
+                    details += "<b>";
+                    details += key.substring(0, 1).toUpperCase() + key.substring(1);
+                    details += ": ";
+                    details += "</b>";
+                    details += clickedItem.get(key);
+                    details += "</br>";
+                }
+                Log.v(TAG, "Details: " + details);
+                alert.setMessage(Html.fromHtml(details));
+                alert.setIcon(R.mipmap.ic_launcher);
+                alert.setPositiveButton("Open", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.v(TAG, "Positive button clicked");
+                        String s = projectsListView.getItemAtPosition(position).toString();
+                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), clickedItem.get("url"), Toast.LENGTH_LONG).show();
+                    }
+                });
+                alert.show();
+            }
+        });
     }
 
     private SimpleAdapter getAdapterFor(List<Project> projects) {
@@ -203,6 +238,8 @@ public class MainActivity
             hashMap.put("name", project.getName());
             hashMap.put("activity", project.getActivity());
             hashMap.put("time", project.getLastBuildTime());
+            hashMap.put("label", project.getLastBuildLabel());
+            hashMap.put("url", project.getWebUrl());
             dataList.add(hashMap);
         }
 
