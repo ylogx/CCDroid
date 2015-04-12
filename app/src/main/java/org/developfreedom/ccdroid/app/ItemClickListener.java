@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
@@ -11,7 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.Map;
 
@@ -39,13 +40,22 @@ public class ItemClickListener implements AdapterView.OnItemClickListener {
         alert.setPositiveButton("Open", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Log.v(TAG, "Positive button clicked");
-                String s = projectsListView.getItemAtPosition(position).toString();
-                Toast.makeText(context, s, Toast.LENGTH_LONG).show();
-                Toast.makeText(context, clickedItem.get("url"), Toast.LENGTH_LONG).show();
+                Log.v(TAG, "Opening the web url");
+                openUrl(clickedItem.get("url"));
             }
         });
         alert.show();
+    }
+
+    private void openUrl(String url) {
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            url = "http://" + url;
+        }
+        Intent browserIntent = new Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(url)
+        );
+        mainActivity.startActivity(browserIntent);
     }
 
     private Spanned getDetails(Map<String, String> clickedItem) {
@@ -58,7 +68,7 @@ public class ItemClickListener implements AdapterView.OnItemClickListener {
             details += clickedItem.get(key);
             details += "<br/>";
         }
-        Log.v(TAG, "Details: " + Html.fromHtml(details));
+        Log.v(TAG, "Details: \n" + Html.fromHtml(details));
         return Html.fromHtml(details);
     }
 }
