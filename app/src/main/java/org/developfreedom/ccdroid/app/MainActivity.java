@@ -201,19 +201,26 @@ public class MainActivity
         for (Project project : projects) {
             HashMap<String, String> hashMap = new HashMap<String,String>();
             String lastBuildStatus = project.getLastBuildStatus();
-            if (lastBuildStatus.equals("Success")) {
-                hashMap.put("flag", Integer.toString(R.drawable.button_green));
-            } else if (lastBuildStatus.equals("Failure")) {
-                hashMap.put("flag", Integer.toString(R.drawable.button_red));
-            } else if (lastBuildStatus.equals("Unknown")) {
-                if (project.getActivity().equals("Building")) {
-                    hashMap.put("flag", Integer.toString(R.drawable.button_refresh));
-                } else {
-                    hashMap.put("flag", Integer.toString(R.drawable.button_yellow));
-                }
-            } else {
-                hashMap.put("flag", Integer.toString(R.drawable.button_grey));
+            int drawableId;
+            switch (lastBuildStatus) {
+                case "Success":
+                    drawableId = R.drawable.button_green;
+                    break;
+                case "Failure":
+                    drawableId = R.drawable.button_red;
+                    break;
+                case "Unknown":
+                    if (project.getActivity().equals("Building")) {
+                        drawableId = R.drawable.button_refresh;
+                    } else {
+                        drawableId = R.drawable.button_yellow;
+                    }
+                    break;
+                default:
+                    drawableId = R.drawable.button_grey;
+                    break;
             }
+            hashMap.put("flag", Integer.toString(drawableId));
             hashMap.put("name", project.getName());
             hashMap.put("activity", project.getActivity());
             hashMap.put("time", project.getLastBuildTime());
