@@ -177,6 +177,15 @@ public class MainActivity
 
     public void updateListView(List<Project> projects) {
         Log.v(TAG, "Starting listview update");
+        SimpleAdapter adapter = getAdapterFor(projects);
+
+        projectsListView = (ListView) findViewById(R.id.fragment_listview_projects);
+
+        projectsListView.setAdapter(adapter);
+        Log.v(TAG, "Adapter set to projects listview has " + adapter.getCount() + " items");
+    }
+
+    private SimpleAdapter getAdapterFor(List<Project> projects) {
         List<HashMap<String,String>> dataList = new ArrayList<HashMap<String,String>>();
 
         for (Project project : projects) {
@@ -210,14 +219,13 @@ public class MainActivity
                 R.id.lw_project_time
         };
 
-        // Instantiating an adapter to store each items
-        // R.layout.listview_layout defines the layout of each item
-        SimpleAdapter adapterToStoreAllDataToBeShown = new SimpleAdapter(getBaseContext(), dataList, R.layout.list_row_layout_project, keysInDataHashmap, valuesIdInListviewLayout);
-
-        projectsListView = (ListView) findViewById(R.id.fragment_listview_projects);
-
-        projectsListView.setAdapter(adapterToStoreAllDataToBeShown);
-        Log.v(TAG, "Adapter set to projects listview has " + adapterToStoreAllDataToBeShown.getCount() + " items");
+        SimpleAdapter adapter = new SimpleAdapter(
+                getBaseContext(),
+                dataList,
+                R.layout.list_row_layout_project, //this layout defines the layout of each item
+                keysInDataHashmap,
+                valuesIdInListviewLayout
+        );
+        return adapter;
     }
-
 }
