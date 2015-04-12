@@ -1,4 +1,4 @@
-package org.developfreedom.ccdroid.app;
+package org.developfreedom.ccdroid.app.listeners;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -13,16 +13,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import org.developfreedom.ccdroid.app.R;
 
 import java.util.Map;
 
-public class ItemClickListener implements AdapterView.OnItemClickListener {
-    static String TAG = ItemClickListener.class.getSimpleName();
+public class ListViewItemClickListener implements AdapterView.OnItemClickListener {
+    static String TAG = ListViewItemClickListener.class.getSimpleName();
     ListView projectsListView;
     Context context;
     Activity mainActivity;
 
-    public ItemClickListener(ListView projectsListView, Context applicationContext, Activity mainActivity) {
+    public ListViewItemClickListener(ListView projectsListView, Context applicationContext, Activity mainActivity) {
         this.projectsListView = projectsListView;
         this.context = applicationContext;
         this.mainActivity = mainActivity;

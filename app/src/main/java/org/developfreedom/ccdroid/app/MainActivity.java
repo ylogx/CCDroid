@@ -15,6 +15,8 @@ import android.view.*;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+import org.developfreedom.ccdroid.app.listeners.ListViewItemClickListener;
+import org.developfreedom.ccdroid.app.tasks.DownloadXmlTask;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -185,7 +187,7 @@ public class MainActivity
         Log.v(TAG, "Adapter set to projects listview has " + adapter.getCount() + " items");
 
         projectsListView.setOnItemClickListener(
-                new ItemClickListener(
+                new ListViewItemClickListener(
                         projectsListView,
                         getApplicationContext(),
                         MainActivity.this

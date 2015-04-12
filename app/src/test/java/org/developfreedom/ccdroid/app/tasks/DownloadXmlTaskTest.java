@@ -1,5 +1,8 @@
-package org.developfreedom.ccdroid.app;
+package org.developfreedom.ccdroid.app.tasks;
 
+import org.developfreedom.ccdroid.app.OnDownloadTaskCompleted;
+import org.developfreedom.ccdroid.app.Project;
+import org.developfreedom.ccdroid.app.ProjectParser;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

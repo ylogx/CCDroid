@@ -1,6 +1,8 @@
-package org.developfreedom.ccdroid.app;
+package org.developfreedom.ccdroid.app.tasks;
 
 import android.os.AsyncTask;
+import org.developfreedom.ccdroid.app.OnDownloadTaskCompleted;
+import org.developfreedom.ccdroid.app.ProjectParser;
 
 import java.util.List;
 
