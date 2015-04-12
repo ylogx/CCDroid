@@ -219,14 +219,10 @@ public class MainActivity
         String[] keysInDataHashmap = {
                 "flag",
                 "name",
-                "activity",
-                "time"
         };
         int[] valuesIdInListviewLayout = {
                 R.id.lw_status_flag,
                 R.id.lw_project_name,
-                R.id.lw_project_activity,
-                R.id.lw_project_time
         };
 
         SimpleAdapter adapter = new SimpleAdapter(
