@@ -201,9 +201,9 @@ public class MainActivity
                     details += ": ";
                     details += "</b>";
                     details += clickedItem.get(key);
-                    details += "</br>";
+                    details += "<br/>";
                 }
-                Log.v(TAG, "Details: " + details);
+                Log.v(TAG, "Details: " + Html.fromHtml(details));
                 alert.setMessage(Html.fromHtml(details));
                 alert.setIcon(R.mipmap.ic_launcher);
                 alert.setPositiveButton("Open", new DialogInterface.OnClickListener() {
