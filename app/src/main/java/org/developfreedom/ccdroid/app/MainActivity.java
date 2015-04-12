@@ -200,32 +200,18 @@ public class MainActivity
 
         for (Project project : projects) {
             HashMap<String, String> hashMap = new HashMap<String,String>();
-            String lastBuildStatus = project.getLastBuildStatus();
-            int drawableId;
-            switch (lastBuildStatus) {
-                case "Success":
-                    drawableId = R.drawable.button_green;
-                    break;
-                case "Failure":
-                    drawableId = R.drawable.button_red;
-                    break;
-                case "Unknown":
-                    if (project.getActivity().equals("Building")) {
-                        drawableId = R.drawable.button_refresh;
-                    } else {
-                        drawableId = R.drawable.button_yellow;
-                    }
-                    break;
-                default:
-                    drawableId = R.drawable.button_grey;
-                    break;
-            }
+            int drawableId = getDrawableId(
+                    project.getLastBuildStatus(),
+                    project.getActivity()
+            );
+
             hashMap.put("flag", Integer.toString(drawableId));
             hashMap.put("name", project.getName());
             hashMap.put("activity", project.getActivity());
             hashMap.put("time", project.getLastBuildTime());
             hashMap.put("label", project.getLastBuildLabel());
             hashMap.put("url", project.getWebUrl());
+
             dataList.add(hashMap);
         }
 
@@ -246,5 +232,28 @@ public class MainActivity
                 valuesIdInListviewLayout
         );
         return adapter;
+    }
+
+    private int getDrawableId(String lastBuildStatus, String activity) {
+        int drawableId;
+        switch (lastBuildStatus) {
+            case "Success":
+                drawableId = R.drawable.button_green;
+                break;
+            case "Failure":
+                drawableId = R.drawable.button_red;
+                break;
+            case "Unknown":
+                if (activity.equals("Building")) {
+                    drawableId = R.drawable.button_refresh;
+                } else {
+                    drawableId = R.drawable.button_yellow;
+                }
+                break;
+            default:
+                drawableId = R.drawable.button_grey;
+                break;
+        }
+        return drawableId;
     }
 }
