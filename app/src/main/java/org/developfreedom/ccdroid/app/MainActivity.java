@@ -206,7 +206,11 @@ public class MainActivity
             } else if (lastBuildStatus.equals("Failure")) {
                 hashMap.put("flag", Integer.toString(R.drawable.button_red));
             } else if (lastBuildStatus.equals("Unknown")) {
-                hashMap.put("flag", Integer.toString(R.drawable.button_yellow));
+                if (project.getActivity().equals("Building")) {
+                    hashMap.put("flag", Integer.toString(R.drawable.button_refresh));
+                } else {
+                    hashMap.put("flag", Integer.toString(R.drawable.button_yellow));
+                }
             } else {
                 hashMap.put("flag", Integer.toString(R.drawable.button_grey));
             }
