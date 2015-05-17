@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/shubhamchaudhary/ccdroid.png?label=ready&title=Ready)](https://waffle.io/shubhamchaudhary/ccdroid)
 CCDroid
 =======
 
