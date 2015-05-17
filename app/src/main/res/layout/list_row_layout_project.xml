@@ -12,6 +12,7 @@
             android:contentDescription="Status"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:src="@drawable/button_green"
             />
 
     <LinearLayout
@@ -25,10 +26,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
+                android:text="shubhamchaudhary/wordpowermadeeasy (master) :: compile_test"
                 />
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="bottom"
                 android:orientation="horizontal"
                 >
             <TextView
@@ -36,6 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
+                    android:text="Sleeping"
                     android:layout_weight="1"
                     android:layout_gravity="start"/>
             <TextView
@@ -43,6 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
+                    android:text="2015-05-15T11:32:34Z"
                     android:layout_weight="1"
                     android:gravity="end"
                     android:paddingEnd="10dp"
