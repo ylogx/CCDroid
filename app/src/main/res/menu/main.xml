@@ -5,6 +5,10 @@
     <item android:id="@+id/action_refresh"
           android:title="@string/action_refresh"
           app:showAsAction="withText|ifRoom"/>
+    <item android:id="@+id/action_add_url"
+          android:icon="@android:drawable/ic_menu_add"
+          android:title="@string/action_add_url"
+          app:showAsAction="withText|ifRoom"/>
     <item android:id="@+id/action_settings"
           android:title="@string/action_settings"
           android:orderInCategory="100"

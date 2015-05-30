@@ -10,5 +10,8 @@
     <string name="action_refresh">Refresh</string>
     <string name="action_settings">Settings</string>
     <string name="default_textview_text">Press Refresh</string>
+    <string name="action_add_url">Add Url</string>
+    <string name="dialog_message_add_url">Specify the cctray xml url from your build server</string>
+    <string name="dialog_title_add_url">Add Url</string>
 
 </resources>

@@ -1,7 +1,9 @@
 package org.developfreedom.ccdroid.app;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.*;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -40,6 +43,7 @@ public class MainActivity
     private CharSequence mTitle;
     private ListView projectsListView;
     private static String TAG = MainActivity.class.getSimpleName();
+    private Config config;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,7 @@ public class MainActivity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+        config = new Config(this);
     }
 
     @Override
@@ -124,6 +129,10 @@ public class MainActivity
             return true;
         }
 
+        if (item.getItemId() == R.id.action_add_url) {
+            show_add_url_dialog();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -174,7 +183,7 @@ public class MainActivity
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             // fetch data
-            String projectUrl = "https://snap-ci.com/hwEMz49fQYcu2gA_wLEMTE3lF53Xx5BMrxyCTm0heEk/cctray.xml";
+            String projectUrl = config.getUrl();
             DownloadXmlTask downloadXmlTask = new DownloadXmlTask(this, new ProjectParser());
             downloadXmlTask.execute(projectUrl);
         } else {
@@ -182,7 +191,43 @@ public class MainActivity
         }
     }
 
+    private void show_add_url_dialog() {
+        // 1. Instantiate an AlertDialog.Builder with its constructor
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        // 2. Chain together various setter methods to set the dialog characteristics
+        builder.setMessage(R.string.dialog_message_add_url)
+                .setTitle(R.string.dialog_title_add_url);
+
+        final EditText input = new EditText(this);
+        input.setText(config.getUrl());
+        builder.setView(input);
+
+        // Add the buttons
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+                //TODO: Check input text to be a url
+                config.setUrl(input.getText().toString());
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+
+        // 3. Get the AlertDialog from create()
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
     public void updateListView(List<Project> projects) {
+        if (projects == null) {
+            Log.d(TAG, "Error: project list came empty");
+            return;
+        }
         Log.v(TAG, "Starting listview update");
         SimpleAdapter adapter = getAdapterFor(projects);
 
