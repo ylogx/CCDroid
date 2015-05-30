@@ -13,5 +13,8 @@
     <string name="action_add_url">Add Url</string>
     <string name="dialog_message_add_url">Specify the cctray xml url from your build server</string>
     <string name="dialog_title_add_url">Add Url</string>
+    <string name="toast_unable_to_fetch_project_list">Unable to fetch project list</string>
+    <string name="toast_network_unavailable">Network Unavailable</string>
+    <string name="toast_refreshing">Refreshing</string>
 
 </resources>

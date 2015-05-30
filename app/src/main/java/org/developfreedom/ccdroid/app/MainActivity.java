@@ -121,7 +121,7 @@ public class MainActivity
         //noinspection SimplifiableIfStatement
 
         if (item.getItemId() == R.id.action_refresh) {
-            Toast.makeText(this, "Refreshing", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_refreshing), Toast.LENGTH_SHORT).show();
             refresh();
             return true;
         }
@@ -185,6 +185,7 @@ public class MainActivity
             downloadXmlTask.execute(projectUrl);
         } else {
             Log.v(TAG, "refresh: No Network");
+            Toast.makeText(this, getString(R.string.toast_network_unavailable), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -222,6 +223,7 @@ public class MainActivity
 
     public void updateListView(List<Project> projects) {
         if (projects == null) {
+            Toast.makeText(this, getString(R.string.toast_unable_to_fetch_project_list), Toast.LENGTH_SHORT).show();
             Log.d(TAG, "Error: project list came empty");
             return;
         }
