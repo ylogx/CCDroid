@@ -19,7 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_weight="1.8"
-            android:gravity="center|bottom"
             android:orientation="vertical" >
         <ListView
                 android:layout_width="fill_parent"
