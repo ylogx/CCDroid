@@ -7,7 +7,7 @@
           android:title="@string/action_refresh"
           app:showAsAction="withText|ifRoom"/>
     <item android:id="@+id/action_add_url"
-          android:icon="@android:drawable/ic_menu_add"
+          android:icon="@drawable/ic_add_white_24dp"
           android:title="@string/action_add_url"
           app:showAsAction="withText|ifRoom"/>
     <item android:id="@+id/action_settings"
