@@ -130,7 +130,6 @@ public class MainActivity
         //noinspection SimplifiableIfStatement
 
         if (item.getItemId() == R.id.action_refresh) {
-            Toast.makeText(this, getString(R.string.toast_refreshing), Toast.LENGTH_SHORT).show();
             refresh();
             return true;
         }
