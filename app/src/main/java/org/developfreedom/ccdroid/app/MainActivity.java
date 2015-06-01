@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -44,6 +45,7 @@ public class MainActivity
     private ListView projectsListView;
     private static String TAG = MainActivity.class.getSimpleName();
     private Config config;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,13 @@ public class MainActivity
     @Override
     protected void onStart() {
         super.onStart();
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.main_swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
         refresh();
     }
 
@@ -174,6 +183,7 @@ public class MainActivity
     }
 
     public void refresh() {
+        swipeRefreshLayout.setRefreshing(true);
         Log.v(TAG, "Refreshing");
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -242,6 +252,7 @@ public class MainActivity
                         MainActivity.this
                 )
         );
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     private SimpleAdapter getAdapterFor(List<Project> projects) {
