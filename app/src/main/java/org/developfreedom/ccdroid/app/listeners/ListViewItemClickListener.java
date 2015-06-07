@@ -1,6 +1,5 @@
 package org.developfreedom.ccdroid.app.listeners;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,12 +20,10 @@ public class ListViewItemClickListener implements AdapterView.OnItemClickListene
     static String TAG = ListViewItemClickListener.class.getSimpleName();
     ListView projectsListView;
     Context context;
-    Activity mainActivity;
 
-    public ListViewItemClickListener(ListView projectsListView, Context applicationContext, Activity mainActivity) {
+    public ListViewItemClickListener(ListView projectsListView, Context applicationContext) {
         this.projectsListView = projectsListView;
         this.context = applicationContext;
-        this.mainActivity = mainActivity;
     }
 
     @Override
@@ -34,7 +31,7 @@ public class ListViewItemClickListener implements AdapterView.OnItemClickListene
         Log.v(TAG, "Listview item clicked");
         ListAdapter adapter = projectsListView.getAdapter();
         final Map<String, String> clickedItem = (Map<String, String>) adapter.getItem(position);
-        AlertDialog.Builder alert = new AlertDialog.Builder(mainActivity);
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
         alert.setTitle("Details");
         alert.setMessage(getDetails(clickedItem));
         alert.setIcon(R.mipmap.ic_launcher);
@@ -56,7 +53,7 @@ public class ListViewItemClickListener implements AdapterView.OnItemClickListene
                 Intent.ACTION_VIEW,
                 Uri.parse(url)
         );
-        mainActivity.startActivity(browserIntent);
+        context.startActivity(browserIntent);
     }
 
     private Spanned getDetails(Map<String, String> clickedItem) {
