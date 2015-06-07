@@ -61,7 +61,7 @@ public class ListViewItemClickListener implements AdapterView.OnItemClickListene
 
     private Spanned getDetails(Map<String, String> clickedItem) {
         String details = "";
-        for (String key: clickedItem.keySet()) {
+        for (String key : clickedItem.keySet()) {
             details += "<b>";
             details += key.substring(0, 1).toUpperCase() + key.substring(1);
             details += ": ";

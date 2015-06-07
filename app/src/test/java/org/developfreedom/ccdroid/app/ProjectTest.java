@@ -39,6 +39,7 @@ public class ProjectTest {
         assertEquals("https://travis-ci.org/shubhamchaudhary/wordpowermadeeasy", project.getWebUrl());
 
     }
+
     @Test
     public void testSettersWorkCorrectly() {
         Project project = new Project();

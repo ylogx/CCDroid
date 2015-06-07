@@ -24,7 +24,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(RobolectricTestRunner.class)
 @Config(reportSdk = 18)
 public class MainActivityTest //extends FragmentTestCase<NavigationDrawerFragment>
-    {
+{
 
     private final ActivityController<MainActivity> controller = Robolectric.buildActivity(MainActivity.class);
     private final Context context = Robolectric.application.getApplicationContext();
@@ -84,7 +84,7 @@ public class MainActivityTest //extends FragmentTestCase<NavigationDrawerFragmen
         final int firstListItemPosition = listView.getFirstVisiblePosition();
         final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
 
-        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
+        if (pos < firstListItemPosition || pos > lastListItemPosition) {
             return listView.getAdapter().getView(pos, null, listView);
         } else {
             final int childIndex = pos - firstListItemPosition;
