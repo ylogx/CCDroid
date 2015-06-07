@@ -1,3 +1,23 @@
+/*
+ * ListViewItemClickListener.java
+ *
+ * Copyright (c) 2015 Shubham Chaudhary <me@shubhamchaudhary.in>
+ *
+ * CCDroid is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * CCDroid is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with CCDroid.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package org.developfreedom.ccdroid.app.listeners;
 
 import android.app.AlertDialog;
@@ -31,15 +51,21 @@ public class ListViewItemClickListener implements AdapterView.OnItemClickListene
         Log.v(TAG, "Listview item clicked");
         ListAdapter adapter = projectsListView.getAdapter();
         final Map<String, String> clickedItem = (Map<String, String>) adapter.getItem(position);
+        final String url = clickedItem.get("url");
+
+        showAlertDialog(url, getDetails(clickedItem));
+    }
+
+    private void showAlertDialog(final String url, Spanned details) {
         AlertDialog.Builder alert = new AlertDialog.Builder(context);
         alert.setTitle("Details");
-        alert.setMessage(getDetails(clickedItem));
+        alert.setMessage(details);
         alert.setIcon(R.mipmap.ic_launcher);
         alert.setPositiveButton("Open", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Log.v(TAG, "Opening the web url");
-                openUrl(clickedItem.get("url"));
+                openUrl(url);
             }
         });
         alert.show();
