@@ -5,8 +5,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class Config {
-    private static final String DEFAULT_KEY_URL = "https://api.travis-ci.org/repos/shubhamchaudhary/CCDroid/cc.xml";
-    private static final String KEY_URL = "key_url";
+    public static final String DEFAULT_KEY_URL = "https://api.travis-ci.org/repos/shubhamchaudhary/CCDroid/cc.xml";
+    public static final String KEY_URL = "key_url";
     private Context context;
 
     public Config(Context context) {
