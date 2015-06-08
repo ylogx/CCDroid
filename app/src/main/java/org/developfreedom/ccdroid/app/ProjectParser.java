@@ -12,22 +12,12 @@ import java.util.List;
 public class ProjectParser extends XmlFeedReader {
     private static String TAG = ProjectParser.class.getSimpleName();
 
-    public List<Project> fetch(String url) {
-        try {
-            return downloadUrl(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private List downloadUrl(String myurl) throws IOException {
+    public List<Project> fetch(URL url) throws IOException {
         InputStream is = null;
         List projectList = null;
 
         try {
-            Log.d(TAG, "Parsing " + myurl);
-            URL url = new URL(myurl);
+            Log.d(TAG, "Parsing " + url.toString());
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(10000);
             conn.setConnectTimeout(15000);
@@ -52,4 +42,5 @@ public class ProjectParser extends XmlFeedReader {
         }
         return projectList;
     }
+
 }

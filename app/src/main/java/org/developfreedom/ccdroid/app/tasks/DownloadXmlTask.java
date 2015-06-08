@@ -4,6 +4,8 @@ import android.os.AsyncTask;
 import org.developfreedom.ccdroid.app.OnDownloadTaskCompleted;
 import org.developfreedom.ccdroid.app.ProjectParser;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 public class DownloadXmlTask extends AsyncTask<String, Void, List> {
@@ -18,7 +20,12 @@ public class DownloadXmlTask extends AsyncTask<String, Void, List> {
     @Override
     protected List doInBackground(String... urls) {
         String projectUrl = urls[0];
-        return projectParser.fetch(projectUrl);
+        try {
+            return projectParser.fetch(new URL(projectUrl));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override

@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
 
+import java.net.URL;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -34,7 +35,7 @@ public class DownloadXmlTaskTest {
     public void testThatProjectListIsFetchedInBackgroundThread() throws Exception {
         String url = "https://snap-ci.com/hwEMz49fQYcu2gA_wLEMTE3lF53Xx5BMrxyCTm0heEk/cctray.xml";
         List<Project> expectedProjects = asList(new Project(), new Project());
-        when(parser.fetch(url)).thenReturn(expectedProjects);
+        when(parser.fetch(new URL(url))).thenReturn(expectedProjects);
 
         List<Project> projects = downloadXmlTask.doInBackground(url);
 
