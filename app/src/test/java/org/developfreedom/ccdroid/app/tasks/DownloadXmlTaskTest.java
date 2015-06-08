@@ -3,10 +3,11 @@ package org.developfreedom.ccdroid.app.tasks;
 import org.developfreedom.ccdroid.app.OnDownloadTaskCompleted;
 import org.developfreedom.ccdroid.app.Project;
 import org.developfreedom.ccdroid.app.ProjectParser;
+import org.developfreedom.ccdroid.app.RobolectricGradleTestRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.util.List;
 
@@ -15,7 +16,8 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
-@RunWith(RobolectricTestRunner.class)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(emulateSdk = 18)
 public class DownloadXmlTaskTest {
     private OnDownloadTaskCompleted onDownloadTaskCompleted;
     private DownloadXmlTask downloadXmlTask;

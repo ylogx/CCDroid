@@ -33,6 +33,10 @@ android {
     sourceSets {
         androidTest.setRoot('src/test')
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
