@@ -223,7 +223,7 @@ public class MainActivity
         projectsListView.setOnItemClickListener(
                 new ListViewItemClickListener(
                         projectsListView,
-                        getApplicationContext()
+                        this
                 )
         );
         swipeRefreshLayout.setRefreshing(false);
