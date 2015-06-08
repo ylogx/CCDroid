@@ -20,10 +20,7 @@ package org.developfreedom.ccdroid.app;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -39,6 +36,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import org.developfreedom.ccdroid.app.listeners.ListViewItemClickListener;
 import org.developfreedom.ccdroid.app.tasks.DownloadXmlTask;
+import org.developfreedom.ccdroid.app.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -161,10 +159,7 @@ public class MainActivity
     public void refresh() {
         swipeRefreshLayout.setRefreshing(true);
         Log.v(TAG, "Refreshing");
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
+        if (Utils.isOnline(this)) {
             // fetch data
             String projectUrl = config.getUrl();
             DownloadXmlTask downloadXmlTask = new DownloadXmlTask(this, new ProjectParser());

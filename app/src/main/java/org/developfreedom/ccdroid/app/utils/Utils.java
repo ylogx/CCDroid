@@ -22,6 +22,7 @@ package org.developfreedom.ccdroid.app.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 
 public class Utils {
@@ -34,5 +35,11 @@ public class Utils {
                 Uri.parse(url)
         );
         context.startActivity(browserIntent);
+    }
+
+
+    public static boolean isOnline(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnectedOrConnecting();
     }
 }

@@ -22,19 +22,31 @@ package org.developfreedom.ccdroid.app.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 //@RunWith(RobolectricGradleTestRunner.class)
 //@Config(emulateSdk = 18)
 public class UtilsTest {
+    Context context;
+
+    @Before
+    public void setUp() throws Exception {
+        context = mock(Context.class);
+    }
+
     @Test
     public void testShouldOpenUrl() throws Exception {
         //Activity activity = Robolectric.buildActivity(MainActivity.class).create().get();
-        Context context = mock(Context.class);
         String url = "https://ccdroid.github.io";
 
         Utils.openUrl(url, context);
@@ -49,5 +61,29 @@ public class UtilsTest {
         assertThat(shadowIntent.getAction(), is(Intent.ACTION_VIEW));
         assertThat(shadowIntent.getData(), is(Uri.parse(url)));
 */
+    }
+
+    @Test
+    public void testShouldReturnFalseIfNetworkDisconnected() throws Exception {
+        ConnectivityManager connectivityManager = mock(ConnectivityManager.class);
+        when(context.getSystemService(Context.CONNECTIVITY_SERVICE)).thenReturn(connectivityManager);
+        when(connectivityManager.getActiveNetworkInfo()).thenReturn(null);
+
+        boolean online = Utils.isOnline(context);
+
+        assertThat(online, is(false));
+    }
+
+    @Test
+    public void testShouldReturnTrueIfNetworkConnected() throws Exception {
+        ConnectivityManager connectivityManager = mock(ConnectivityManager.class);
+        when(context.getSystemService(Context.CONNECTIVITY_SERVICE)).thenReturn(connectivityManager);
+        NetworkInfo networkInfo = mock(NetworkInfo.class);
+        when(connectivityManager.getActiveNetworkInfo()).thenReturn(networkInfo);
+        when(networkInfo.isConnectedOrConnecting()).thenReturn(true);
+
+        boolean online = Utils.isOnline(context);
+
+        assertThat(online, is(true));
     }
 }
