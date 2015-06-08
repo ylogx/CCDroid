@@ -58,10 +58,10 @@ public class ListViewItemClickListener implements AdapterView.OnItemClickListene
 
     private void showAlertDialog(final String url, Spanned details) {
         AlertDialog.Builder alert = new AlertDialog.Builder(context);
-        alert.setTitle("Details");
+        alert.setTitle(context.getString(R.string.alert_title_details));
         alert.setMessage(details);
         alert.setIcon(R.mipmap.ic_launcher);
-        alert.setPositiveButton("Open", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton(context.getString(R.string.alert_button_open), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Log.v(TAG, "Opening the web url");
