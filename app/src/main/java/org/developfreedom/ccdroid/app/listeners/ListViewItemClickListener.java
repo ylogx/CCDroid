@@ -23,8 +23,6 @@ package org.developfreedom.ccdroid.app.listeners;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
@@ -33,6 +31,7 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import org.developfreedom.ccdroid.app.R;
+import org.developfreedom.ccdroid.app.utils.Utils;
 
 import java.util.Map;
 
@@ -65,22 +64,12 @@ public class ListViewItemClickListener implements AdapterView.OnItemClickListene
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Log.v(TAG, "Opening the web url");
-                openUrl(url);
+                Utils.openUrl(url, context);
             }
         });
         alert.show();
     }
 
-    private void openUrl(String url) {
-        if (!url.startsWith("http://") && !url.startsWith("https://")) {
-            url = "http://" + url;
-        }
-        Intent browserIntent = new Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(url)
-        );
-        context.startActivity(browserIntent);
-    }
 
     private Spanned getDetails(Map<String, String> clickedItem) {
         String details = "";
