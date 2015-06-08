@@ -9,8 +9,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-public class ProjectParser extends XmlFeedReader {
+public class ProjectParser {
     private static String TAG = ProjectParser.class.getSimpleName();
+    private final XmlFeedReader xmlFeedReader;
+
+    public ProjectParser() {
+        this.xmlFeedReader = new XmlFeedReader();
+    }
 
     public List<Project> fetch(URL url) throws IOException {
         InputStream is = null;
@@ -31,7 +36,7 @@ public class ProjectParser extends XmlFeedReader {
 
             // Convert the InputStream into a string
             Log.d(TAG, "InputStream has " + is.available() + " available bytes");
-            projectList = parse(is);
+            projectList = xmlFeedReader.parse(is);
             conn.disconnect();
         } catch (XmlPullParserException e) {
             e.printStackTrace();
