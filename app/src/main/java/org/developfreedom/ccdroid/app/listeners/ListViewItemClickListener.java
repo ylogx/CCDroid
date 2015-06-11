@@ -25,18 +25,20 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.text.Html;
 import android.text.Spanned;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import org.developfreedom.ccdroid.app.R;
+import org.developfreedom.ccdroid.app.utils.LogUtils;
 import org.developfreedom.ccdroid.app.utils.Utils;
 
 import java.util.Map;
 
+import static org.developfreedom.ccdroid.app.utils.LogUtils.LOGV;
+
 public class ListViewItemClickListener implements AdapterView.OnItemClickListener {
-    static String TAG = ListViewItemClickListener.class.getSimpleName();
+    static String TAG = LogUtils.makeLogTag(ListViewItemClickListener.class);
     ListView projectsListView;
     Context context;
 
@@ -47,7 +49,7 @@ public class ListViewItemClickListener implements AdapterView.OnItemClickListene
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-        Log.v(TAG, "Listview item clicked");
+        LOGV(TAG, "Listview item clicked");
         ListAdapter adapter = projectsListView.getAdapter();
         final Map<String, String> clickedItem = (Map<String, String>) adapter.getItem(position);
         final String url = clickedItem.get("url");
@@ -63,7 +65,7 @@ public class ListViewItemClickListener implements AdapterView.OnItemClickListene
         alert.setPositiveButton(context.getString(R.string.alert_button_open), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Log.v(TAG, "Opening the web url");
+                LOGV(TAG, "Opening the web url");
                 Utils.openUrl(url, context);
             }
         });
@@ -81,7 +83,7 @@ public class ListViewItemClickListener implements AdapterView.OnItemClickListene
             details += clickedItem.get(key);
             details += "<br/>";
         }
-        Log.v(TAG, "Details: \n" + Html.fromHtml(details));
+        LOGV(TAG, "Details: \n" + Html.fromHtml(details));
         return Html.fromHtml(details);
     }
 }

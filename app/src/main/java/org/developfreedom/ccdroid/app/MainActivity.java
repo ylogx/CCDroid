@@ -28,7 +28,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.*;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -37,11 +36,14 @@ import android.widget.Toast;
 import org.developfreedom.ccdroid.app.controllers.ListViewController;
 import org.developfreedom.ccdroid.app.listeners.ListViewItemClickListener;
 import org.developfreedom.ccdroid.app.tasks.DownloadXmlTask;
+import org.developfreedom.ccdroid.app.utils.LogUtils;
 import org.developfreedom.ccdroid.app.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import static org.developfreedom.ccdroid.app.utils.LogUtils.*;
 
 
 public class MainActivity
@@ -50,7 +52,7 @@ public class MainActivity
         NavigationDrawerFragment.NavigationDrawerCallbacks,
         ListViewController {
 
-    private static String TAG = MainActivity.class.getSimpleName();
+    private static String TAG = LogUtils.makeLogTag(MainActivity.class);
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -159,14 +161,14 @@ public class MainActivity
 
     public void refresh() {
         swipeRefreshLayout.setRefreshing(true);
-        Log.v(TAG, "Refreshing");
+        LOGV(TAG, "Refreshing");
         if (Utils.isOnline(this)) {
             // fetch data
             String projectUrl = config.getUrl();
             DownloadXmlTask downloadXmlTask = new DownloadXmlTask(this, new ProjectParser());
             downloadXmlTask.execute(projectUrl);
         } else {
-            Log.v(TAG, "refresh: No Network");
+            LOGV(TAG, "refresh: No Network");
             Toast.makeText(this, getString(R.string.toast_network_unavailable), Toast.LENGTH_SHORT).show();
         }
     }
@@ -205,16 +207,16 @@ public class MainActivity
     public void updateListView(List<Project> projects) {
         if (projects == null) {
             Toast.makeText(this, getString(R.string.toast_unable_to_fetch_project_list), Toast.LENGTH_SHORT).show();
-            Log.d(TAG, "Error: project list came empty");
+            LOGE(TAG, "Error: project list came empty");
             return;
         }
-        Log.v(TAG, "Starting listview update");
+        LOGV(TAG, "Starting listview update");
         SimpleAdapter adapter = getAdapterFor(projects);
 
         projectsListView = (ListView) findViewById(R.id.fragment_listview_projects);
 
         projectsListView.setAdapter(adapter);
-        Log.v(TAG, "Adapter set to projects listview has " + adapter.getCount() + " items");
+        LOGD(TAG, "Adapter set to projects listview has " + adapter.getCount() + " items");
 
         projectsListView.setOnItemClickListener(
                 new ListViewItemClickListener(
