@@ -1,7 +1,7 @@
 package org.developfreedom.ccdroid.app.tasks;
 
 import android.os.AsyncTask;
-import org.developfreedom.ccdroid.app.OnDownloadTaskCompleted;
+import org.developfreedom.ccdroid.app.controllers.ListViewController;
 import org.developfreedom.ccdroid.app.Project;
 import org.developfreedom.ccdroid.app.ProjectParser;
 
@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DownloadXmlTask extends AsyncTask<String, Void, List<Project>> {
-    private OnDownloadTaskCompleted onDownloadTaskCompleted;
+    private ListViewController listViewController;
     private ProjectParser projectParser;
 
-    public DownloadXmlTask(OnDownloadTaskCompleted onDownloadTaskCompleted, ProjectParser projectParser) {
-        this.onDownloadTaskCompleted = onDownloadTaskCompleted;
+    public DownloadXmlTask(ListViewController listViewController, ProjectParser projectParser) {
+        this.listViewController = listViewController;
         this.projectParser = projectParser;
     }
 
@@ -35,6 +35,6 @@ public class DownloadXmlTask extends AsyncTask<String, Void, List<Project>> {
 
     @Override
     protected void onPostExecute(List<Project> result) {
-        onDownloadTaskCompleted.updateListView(result);
+        listViewController.updateListView(result);
     }
 }

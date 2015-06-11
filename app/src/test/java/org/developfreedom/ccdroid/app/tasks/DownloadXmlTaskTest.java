@@ -1,6 +1,6 @@
 package org.developfreedom.ccdroid.app.tasks;
 
-import org.developfreedom.ccdroid.app.OnDownloadTaskCompleted;
+import org.developfreedom.ccdroid.app.controllers.ListViewController;
 import org.developfreedom.ccdroid.app.Project;
 import org.developfreedom.ccdroid.app.ProjectParser;
 import org.developfreedom.ccdroid.app.RobolectricGradleTestRunner;
@@ -20,15 +20,15 @@ import static org.mockito.Mockito.*;
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(emulateSdk = 18)
 public class DownloadXmlTaskTest {
-    private OnDownloadTaskCompleted onDownloadTaskCompleted;
+    private ListViewController listViewController;
     private DownloadXmlTask downloadXmlTask;
     private ProjectParser parser;
 
     @Before
     public void setUp() throws Exception {
-        onDownloadTaskCompleted = mock(OnDownloadTaskCompleted.class);
+        listViewController = mock(ListViewController.class);
         parser = mock(ProjectParser.class);
-        downloadXmlTask = new DownloadXmlTask(onDownloadTaskCompleted, parser);
+        downloadXmlTask = new DownloadXmlTask(listViewController, parser);
     }
 
     @Test
@@ -50,6 +50,6 @@ public class DownloadXmlTaskTest {
 
         downloadXmlTask.onPostExecute(projects);
 
-        verify(onDownloadTaskCompleted).updateListView(projects);
+        verify(listViewController).updateListView(projects);
     }
 }

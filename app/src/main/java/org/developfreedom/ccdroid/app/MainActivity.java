@@ -34,6 +34,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+import org.developfreedom.ccdroid.app.controllers.ListViewController;
 import org.developfreedom.ccdroid.app.listeners.ListViewItemClickListener;
 import org.developfreedom.ccdroid.app.tasks.DownloadXmlTask;
 import org.developfreedom.ccdroid.app.utils.Utils;
@@ -47,7 +48,7 @@ public class MainActivity
         extends ActionBarActivity
         implements
         NavigationDrawerFragment.NavigationDrawerCallbacks,
-        OnDownloadTaskCompleted {
+        ListViewController {
 
     private static String TAG = MainActivity.class.getSimpleName();
     /**
