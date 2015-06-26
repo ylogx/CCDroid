@@ -65,7 +65,6 @@ public class ProjectContract {
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_PROJECTS).build();
 
         public static final String TABLE_PROJECTS = "projects";
-        public static final String KEY_INDEX = "index";
         public static final String KEY_PROJECT_NAME = "name";
         public static final String KEY_PROJECT_ACTIVITY = "activity";
         public static final String KEY_PROJECT_LABEL = "lastBuildLabel";

@@ -37,14 +37,13 @@ public class ProjectOpenHelper extends SQLiteOpenHelper {
     private static final String COMMA_SEP = ",";
     private static final String COMMAND_DROP_PROJECT_TABLE = "DROP TABLE IF EXISTS " + TABLE_PROJECTS;
     private static final String COMMAND_CREATE_PROJECTS_TABLE = "CREATE TABLE " + TABLE_PROJECTS + " (" +
-            KEY_INDEX + " INTEGER PRIMARY KEY," +
+            _ID + " INTEGER PRIMARY KEY," +
             KEY_PROJECT_NAME + TYPE_TEXT + COMMA_SEP +
             KEY_PROJECT_ACTIVITY + TYPE_TEXT + COMMA_SEP +
             KEY_PROJECT_LABEL + TYPE_TEXT + COMMA_SEP +
             KEY_PROJECT_STATUS + TYPE_TEXT + COMMA_SEP +
             KEY_PROJECT_TIME + TYPE_TEXT + COMMA_SEP +
-            KEY_PROJECT_URL + TYPE_TEXT + COMMA_SEP +
-            ")";
+            KEY_PROJECT_URL + TYPE_TEXT + ")";
 
 
     public ProjectOpenHelper(Context context) {
