@@ -21,7 +21,6 @@
 package org.developfreedom.ccdroid.app.utils;
 
 import android.util.Log;
-import org.developfreedom.ccdroid.app.BuildConfig;
 
 public class LogUtils {
     private static final String LOG_PREFIX = "ccdroid_";
@@ -44,31 +43,19 @@ public class LogUtils {
     }
 
     public static void LOGD(final String tag, String message) {
-        //noinspection PointlessBooleanExpression,ConstantConditions
-        if (BuildConfig.DEBUG || Log.isLoggable(tag, Log.DEBUG)) {
-            Log.d(tag, message);
-        }
+        Log.d(tag, message);
     }
 
     public static void LOGD(final String tag, String message, Throwable cause) {
-        //noinspection PointlessBooleanExpression,ConstantConditions
-        if (BuildConfig.DEBUG || Log.isLoggable(tag, Log.DEBUG)) {
-            Log.d(tag, message, cause);
-        }
+        Log.d(tag, message, cause);
     }
 
     public static void LOGV(final String tag, String message) {
-        //noinspection PointlessBooleanExpression,ConstantConditions
-        if (BuildConfig.DEBUG && Log.isLoggable(tag, Log.VERBOSE)) {
-            Log.v(tag, message);
-        }
+        Log.v(tag, message);
     }
 
     public static void LOGV(final String tag, String message, Throwable cause) {
-        //noinspection PointlessBooleanExpression,ConstantConditions
-        if (BuildConfig.DEBUG && Log.isLoggable(tag, Log.VERBOSE)) {
-            Log.v(tag, message, cause);
-        }
+        Log.v(tag, message, cause);
     }
 
     public static void LOGI(final String tag, String message) {
