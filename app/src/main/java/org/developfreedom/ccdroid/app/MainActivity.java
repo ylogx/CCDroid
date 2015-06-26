@@ -21,9 +21,7 @@ package org.developfreedom.ccdroid.app;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentResolver;
 import android.content.DialogInterface;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -37,8 +35,9 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import org.developfreedom.ccdroid.app.controllers.ListViewController;
+import org.developfreedom.ccdroid.app.controllers.ProjectStorageController;
 import org.developfreedom.ccdroid.app.listeners.ListViewItemClickListener;
-import org.developfreedom.ccdroid.app.storage.ProjectContract;
+import org.developfreedom.ccdroid.app.storage.ProviderController;
 import org.developfreedom.ccdroid.app.tasks.DownloadXmlTask;
 import org.developfreedom.ccdroid.app.utils.LogUtils;
 import org.developfreedom.ccdroid.app.utils.Utils;
@@ -68,6 +67,7 @@ public class MainActivity
     private ListView projectsListView;
     private Config config;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private ProjectStorageController mProjectStorageController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +83,7 @@ public class MainActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         config = new Config(this);
+        mProjectStorageController = new ProviderController(getContentResolver());
     }
 
     @Override
@@ -169,7 +170,7 @@ public class MainActivity
         if (Utils.isOnline(this)) {
             // fetch data
             String projectUrl = config.getUrl();
-            DownloadXmlTask downloadXmlTask = new DownloadXmlTask(this, new ProjectParser(), getApplicationContext());
+            DownloadXmlTask downloadXmlTask = new DownloadXmlTask(new ProjectParser(), this, mProjectStorageController);
             downloadXmlTask.execute(projectUrl);
         } else {
             LOGV(TAG, "refresh: No Network");
@@ -209,7 +210,7 @@ public class MainActivity
     }
 
     public void updateListView(List<Project> projects) {
-        getProjectsFromDatabase();
+        mProjectStorageController.get();
         if (projects == null) {
             Toast.makeText(this, getString(R.string.toast_unable_to_fetch_project_list), Toast.LENGTH_SHORT).show();
             LOGE(TAG, "Error: project list came empty");
@@ -230,41 +231,6 @@ public class MainActivity
                 )
         );
         swipeRefreshLayout.setRefreshing(false);
-    }
-
-    private List<Project> getProjectsFromDatabase() {
-        ContentResolver resolver = getContentResolver();
-        final String[] PROJECT_PROJECTIONS = {
-                ProjectContract.ProjectColumns._ID,
-                ProjectContract.ProjectColumns.KEY_PROJECT_NAME,
-                ProjectContract.ProjectColumns.KEY_PROJECT_ACTIVITY,
-                ProjectContract.ProjectColumns.KEY_PROJECT_LABEL,
-                ProjectContract.ProjectColumns.KEY_PROJECT_STATUS,
-                ProjectContract.ProjectColumns.KEY_PROJECT_TIME,
-                ProjectContract.ProjectColumns.KEY_PROJECT_URL,
-        };
-        final int PROJECTION_ID_INDEX = 0;
-        final int PROJECTION_NAME_INDEX = 1;
-        final int PROJECTION_ACTIVITY_INDEX = 2;
-        final int PROJECTION_LABEL_INDEX = 3;
-        final int PROJECTION_STATUS_INDEX = 4;
-        final int PROJECTION_TIME_INDEX = 5;
-        final int PROJECTION_URL_INDEX = 6;
-        Cursor c = resolver.query(ProjectContract.ProjectColumns.CONTENT_URI,
-                PROJECT_PROJECTIONS, null, null, null);
-        List<Project> projects = new ArrayList<>();
-        while (c.moveToNext()) {
-            String name = c.getString(PROJECTION_NAME_INDEX);
-            String activity = c.getString(PROJECTION_ACTIVITY_INDEX);
-            String label = c.getString(PROJECTION_LABEL_INDEX);
-            String status = c.getString(PROJECTION_STATUS_INDEX);
-            String time = c.getString(PROJECTION_TIME_INDEX);
-            String url = c.getString(PROJECTION_URL_INDEX);
-            Project project = new Project(name, activity, label, status, time, url);
-            projects.add(project);
-            LOGD(TAG, "Project Queried: " + project.toString());
-        }
-        return projects;
     }
 
     private SimpleAdapter getAdapterFor(List<Project> projects) {
