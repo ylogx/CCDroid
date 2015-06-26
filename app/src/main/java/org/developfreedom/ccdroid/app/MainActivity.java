@@ -89,6 +89,7 @@ public class MainActivity
     @Override
     protected void onStart() {
         super.onStart();
+        updateListView();
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.main_swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -209,8 +210,13 @@ public class MainActivity
         dialog.show();
     }
 
+    @Override
+    public void updateListView() {
+        updateListView(mProjectStorageController.get());
+    }
+
+    @Override
     public void updateListView(List<Project> projects) {
-        mProjectStorageController.get();
         if (projects == null) {
             Toast.makeText(this, getString(R.string.toast_unable_to_fetch_project_list), Toast.LENGTH_SHORT).show();
             LOGE(TAG, "Error: project list came empty");
@@ -230,7 +236,9 @@ public class MainActivity
                         this
                 )
         );
-        swipeRefreshLayout.setRefreshing(false);
+        if (swipeRefreshLayout != null && swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     private SimpleAdapter getAdapterFor(List<Project> projects) {

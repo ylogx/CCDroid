@@ -54,6 +54,7 @@ public class DownloadXmlTask extends AsyncTask<String, Void, List<Project>> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        mProjectStorageController.clear();
         mProjectStorageController.add(projects);
         return projects;
     }

@@ -27,5 +27,5 @@ import java.util.List;
 public interface ProjectStorageController {
     void add(List<Project> projects);
     List<Project> get();
-    void delete(Project project);
+    void clear();
 }

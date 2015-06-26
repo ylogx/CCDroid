@@ -29,7 +29,7 @@ import org.developfreedom.ccdroid.app.controllers.ProjectStorageController;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.developfreedom.ccdroid.app.utils.LogUtils.LOGD;
+import static org.developfreedom.ccdroid.app.utils.LogUtils.*;
 
 public class ProviderController implements ProjectStorageController {
     private static final String TAG = ProviderController.class.getSimpleName();
@@ -89,7 +89,9 @@ public class ProviderController implements ProjectStorageController {
     }
 
     @Override
-    public void delete(Project project) {
-
+    public void clear() {
+        LOGV(TAG, "Clearing database");
+        int delete = mResolver.delete(ProjectContract.ProjectColumns.CONTENT_URI, null, null);
+        LOGI(TAG, "Deleted " + delete + " values");
     }
 }
