@@ -42,7 +42,7 @@
 
         <provider
                 android:name=".sync.ProjectProvider"
-                android:authorities="org.developfreedom.ccdroid.app.project"
+                android:authorities="org.developfreedom.ccdroid.app"
                 android:enabled="true"
                 android:exported="true">
         </provider>

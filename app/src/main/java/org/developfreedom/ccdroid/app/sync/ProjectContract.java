@@ -31,7 +31,7 @@ public class ProjectContract {
     /**
      * Content provider authority.
      */
-    public static final String CONTENT_AUTHORITY = "org.developfreedom.ccdroid.app.project";
+    public static final String CONTENT_AUTHORITY = "org.developfreedom.ccdroid.app";
 
     /**
      * Base URI. (content://com.example.android.network.sync.basicsyncadapter)
