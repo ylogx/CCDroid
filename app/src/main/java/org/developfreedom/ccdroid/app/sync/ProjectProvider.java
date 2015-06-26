@@ -30,10 +30,10 @@ import android.net.Uri;
 import org.developfreedom.ccdroid.app.storage.ProjectOpenHelper;
 import org.developfreedom.ccdroid.app.utils.SelectionBuilder;
 
-public class ProjectProvider extends ContentProvider {
-    public ProjectProvider() {
-    }
+import static org.developfreedom.ccdroid.app.utils.LogUtils.LOGV;
 
+public class ProjectProvider extends ContentProvider {
+    public  static final String TAG = ProjectProvider.class.getSimpleName();
     ProjectOpenHelper mDatabaseHelper;
 
     /**
@@ -77,7 +77,6 @@ public class ProjectProvider extends ContentProvider {
      */
     @Override
     public String getType(Uri uri) {
-
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case ROUTE_PROJECTS:
@@ -98,6 +97,7 @@ public class ProjectProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
                         String sortOrder) {
+        LOGV(TAG, "Query: " + selection + selectionArgs);
         SQLiteDatabase db = mDatabaseHelper.getReadableDatabase();
         SelectionBuilder builder = new SelectionBuilder();
         int uriMatch = sUriMatcher.match(uri);
@@ -127,6 +127,8 @@ public class ProjectProvider extends ContentProvider {
      */
     @Override
     public Uri insert(Uri uri, ContentValues values) {
+        LOGV(TAG, "Insert: " + ((values == null) ? 0 : values.size()) + " values into the db");
+        LOGV(TAG, "Insert: " + values.toString());
         final SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
         assert db != null;
         final int match = sUriMatcher.match(uri);
@@ -153,6 +155,7 @@ public class ProjectProvider extends ContentProvider {
      */
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
+        LOGV(TAG, "Delete: " + selection + selectionArgs);
         SelectionBuilder builder = new SelectionBuilder();
         final SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
@@ -185,6 +188,7 @@ public class ProjectProvider extends ContentProvider {
      */
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        LOGV(TAG, "Update: " + selection + selectionArgs.toString());
         SelectionBuilder builder = new SelectionBuilder();
         final SQLiteDatabase db = mDatabaseHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);

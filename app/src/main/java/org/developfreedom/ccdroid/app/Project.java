@@ -16,4 +16,16 @@ public class Project {
     private String lastBuildStatus;
     private String lastBuildTime;
     private String webUrl;
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "name='" + name + '\'' +
+                ", activity='" + activity + '\'' +
+                ", lastBuildLabel='" + lastBuildLabel + '\'' +
+                ", lastBuildStatus='" + lastBuildStatus + '\'' +
+                ", lastBuildTime='" + lastBuildTime + '\'' +
+                ", webUrl='" + webUrl + '\'' +
+                '}';
+    }
 }
