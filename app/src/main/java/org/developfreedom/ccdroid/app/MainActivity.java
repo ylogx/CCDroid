@@ -165,7 +165,7 @@ public class MainActivity
         if (Utils.isOnline(this)) {
             // fetch data
             String projectUrl = config.getUrl();
-            DownloadXmlTask downloadXmlTask = new DownloadXmlTask(this, new ProjectParser());
+            DownloadXmlTask downloadXmlTask = new DownloadXmlTask(this, new ProjectParser(), getApplicationContext());
             downloadXmlTask.execute(projectUrl);
         } else {
             LOGV(TAG, "refresh: No Network");
