@@ -18,7 +18,7 @@
  *
  */
 
-package org.developfreedom.ccdroid.app.sync;
+package org.developfreedom.ccdroid.app.storage;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -27,19 +27,20 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import org.developfreedom.ccdroid.app.storage.ProjectOpenHelper;
 import org.developfreedom.ccdroid.app.utils.SelectionBuilder;
 
 import static org.developfreedom.ccdroid.app.utils.LogUtils.LOGV;
 
 public class ProjectProvider extends ContentProvider {
-    public  static final String TAG = ProjectProvider.class.getSimpleName();
-    ProjectOpenHelper mDatabaseHelper;
-
+    public static final String TAG = ProjectProvider.class.getSimpleName();
     /**
-     * Content authority for this provider.
+     * URI ID for route: /projects
      */
-    private static final String AUTHORITY = ProjectContract.CONTENT_AUTHORITY;
+    public static final int ROUTE_PROJECTS = 1;
+    /**
+     * URI ID for route: /projects/{ID}
+     */
+    public static final int ROUTE_PROJECTS_ID = 2;
 
     // The constants below represent individual URI routes, as IDs. Every URI pattern recognized by
     // this ContentProvider is defined using sUriMatcher.addURI(), and associated with one of these
@@ -48,23 +49,20 @@ public class ProjectProvider extends ContentProvider {
     // When a incoming URI is run through sUriMatcher, it will be tested against the defined
     // URI patterns, and the corresponding route ID will be returned.
     /**
-     * URI ID for route: /projects
+     * Content authority for this provider.
      */
-    public static final int ROUTE_PROJECTS = 1;
-
-    /**
-     * URI ID for route: /projects/{ID}
-     */
-    public static final int ROUTE_PROJECTS_ID = 2;
-
+    private static final String AUTHORITY = ProjectContract.CONTENT_AUTHORITY;
     /**
      * UriMatcher, used to decode incoming URIs.
      */
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+
     static {
         sUriMatcher.addURI(AUTHORITY, "projects", ROUTE_PROJECTS);
         sUriMatcher.addURI(AUTHORITY, "projects/*", ROUTE_PROJECTS_ID);
     }
+
+    ProjectOpenHelper mDatabaseHelper;
 
     @Override
     public boolean onCreate() {
@@ -90,7 +88,7 @@ public class ProjectProvider extends ContentProvider {
 
     /**
      * Perform a database query by URI.
-     *
+     * <p/>
      * <p>Currently supports returning all entries (/entries) and individual entries by ID
      * (/entries/{ID}).
      */

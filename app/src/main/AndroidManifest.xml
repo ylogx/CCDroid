@@ -41,7 +41,7 @@
         </activity>
 
         <provider
-                android:name=".sync.ProjectProvider"
+                android:name=".storage.ProjectProvider"
                 android:authorities="org.developfreedom.ccdroid.app"
                 android:enabled="true"
                 android:exported="true">

@@ -24,15 +24,14 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import static org.developfreedom.ccdroid.app.storage.ProjectContract.ProjectColumns.*;
 import static org.developfreedom.ccdroid.app.utils.LogUtils.LOGI;
 import static org.developfreedom.ccdroid.app.utils.LogUtils.LOGW;
-import static org.developfreedom.ccdroid.app.sync.ProjectContract.ProjectColumns.*;
 
 public class ProjectOpenHelper extends SQLiteOpenHelper {
-    private static final String TAG = ProjectOpenHelper.class.getSimpleName();
-
     public static final String CCDROID_DATABASE_NAME = "ccdroid";
     public static final int DATABASE_VERSION = 1;
+    private static final String TAG = ProjectOpenHelper.class.getSimpleName();
     private static final String TYPE_TEXT = " TEXT";
     private static final String COMMA_SEP = ",";
     private static final String COMMAND_DROP_PROJECT_TABLE = "DROP TABLE IF EXISTS " + TABLE_PROJECTS;

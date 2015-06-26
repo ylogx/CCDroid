@@ -18,7 +18,7 @@
  *
  */
 
-package org.developfreedom.ccdroid.app.sync;
+package org.developfreedom.ccdroid.app.storage;
 
 import android.content.ContentResolver;
 import android.net.Uri;

@@ -1,3 +1,23 @@
+/*
+ * DownloadXmlTask.java
+ *
+ * Copyright (c) 2015 Shubham Chaudhary <me@shubhamchaudhary.in>
+ *
+ * CCDroid is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * CCDroid is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with CCDroid.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package org.developfreedom.ccdroid.app.tasks;
 
 import android.content.ContentResolver;
@@ -7,7 +27,7 @@ import android.os.AsyncTask;
 import org.developfreedom.ccdroid.app.Project;
 import org.developfreedom.ccdroid.app.ProjectParser;
 import org.developfreedom.ccdroid.app.controllers.ListViewController;
-import org.developfreedom.ccdroid.app.sync.ProjectContract.ProjectColumns;
+import org.developfreedom.ccdroid.app.storage.ProjectContract.ProjectColumns;
 
 import java.io.IOException;
 import java.net.URL;

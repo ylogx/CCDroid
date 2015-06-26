@@ -1,5 +1,5 @@
-/**
- * CCDroid - An open source build monitor for Android
+/*
+ * MainActivity.java
  *
  * Copyright (c) 2015 Shubham Chaudhary <me@shubhamchaudhary.in>
  *
@@ -15,6 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with CCDroid.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 package org.developfreedom.ccdroid.app;
 
@@ -37,7 +38,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import org.developfreedom.ccdroid.app.controllers.ListViewController;
 import org.developfreedom.ccdroid.app.listeners.ListViewItemClickListener;
-import org.developfreedom.ccdroid.app.sync.ProjectContract;
+import org.developfreedom.ccdroid.app.storage.ProjectContract;
 import org.developfreedom.ccdroid.app.tasks.DownloadXmlTask;
 import org.developfreedom.ccdroid.app.utils.LogUtils;
 import org.developfreedom.ccdroid.app.utils.Utils;
