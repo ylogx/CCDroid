@@ -25,13 +25,10 @@ import android.annotation.TargetApi;
 import android.content.*;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.RemoteException;
 import org.developfreedom.ccdroid.app.Config;
 import org.developfreedom.ccdroid.app.Project;
 import org.developfreedom.ccdroid.app.ProjectParser;
-import org.developfreedom.ccdroid.app.controllers.ListViewController;
-import org.developfreedom.ccdroid.app.storage.ProjectContract;
-import org.xmlpull.v1.XmlPullParserException;
+import org.developfreedom.ccdroid.app.storage.ProviderController;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -55,7 +52,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
      * Content resolver, for performing database operations.
      */
     private final ContentResolver mContentResolver;
-    private ListViewController mController;
 
     /**
      * Constructor. Obtains handle to content resolver for later use.
@@ -90,7 +86,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         try {
             String feedUrl = new Config(getContext()).getUrl();
             List<Project> projects = new ProjectParser().fetch(new URL(feedUrl));
-            mController.updateListView(projects);
+
+            updateLocalStorage(projects);
         } catch (MalformedURLException e) {
             LOGE(TAG, "Feed URL is malformed", e);
             syncResult.stats.numParseExceptions++;
@@ -103,6 +100,11 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         LOGD(TAG, "Network synchronization complete");
     }
 
+    private void updateLocalStorage(List<Project> projects) {
+        LOGD(TAG, "Updating local storage");
+        ProviderController providerController = new ProviderController(mContentResolver);
+        providerController.clear();
+        providerController.add(projects);
     }
 
 }
