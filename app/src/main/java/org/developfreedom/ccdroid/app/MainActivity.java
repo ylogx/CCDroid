@@ -59,8 +59,8 @@ public class MainActivity
         implements
         NavigationDrawerFragment.NavigationDrawerCallbacks,
         ListViewController {
+    private static final String TAG = LogUtils.makeLogTag(MainActivity.class);
 
-    private static String TAG = LogUtils.makeLogTag(MainActivity.class);
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -81,6 +81,7 @@ public class MainActivity
      * foreground.
      */
     private Object mSyncObserverHandle;
+    private ContentResolver mContentResolver;
 
 
     @Override
@@ -98,7 +99,7 @@ public class MainActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         config = new Config(this);
         mProjectStorageController = new ProviderController(getContentResolver());
-        SyncUtils.CreateSyncAccount(getApplicationContext());
+        SyncUtils.CreateSyncAccountAndSetSyncStrategy(getApplicationContext());
     }
 
 
@@ -156,7 +157,7 @@ public class MainActivity
                 @Override
                 public void run() {
                     // Create a handle to the account that was created by
-                    // SyncService.CreateSyncAccount(). This will be used to query the system to
+                    // SyncService.CreateSyncAccountAndSetSyncStrategy(). This will be used to query the system to
                     // see how the sync status has changed.
                     Account account = GenericAccountService.GetAccount();
                     if (account == null) {

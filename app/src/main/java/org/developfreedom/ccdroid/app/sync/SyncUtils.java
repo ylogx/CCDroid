@@ -29,6 +29,7 @@ import android.preference.PreferenceManager;
 import org.developfreedom.ccdroid.app.storage.ProjectContract;
 
 import static org.developfreedom.ccdroid.app.utils.LogUtils.LOGD;
+import static org.developfreedom.ccdroid.app.utils.LogUtils.LOGI;
 import static org.developfreedom.ccdroid.app.utils.LogUtils.makeLogTag;
 
 
@@ -37,7 +38,9 @@ import static org.developfreedom.ccdroid.app.utils.LogUtils.makeLogTag;
  */
 public class SyncUtils {
     private static final String TAG = makeLogTag(SyncUtils.class);
-    private static final long SYNC_FREQUENCY = 60 * 60;  // 1 hour (in seconds)
+    public static final long SECONDS_PER_MINUTE = 60L;
+    public static final long SYNC_INTERVAL_IN_MINUTES = 1L;
+    public static final long SYNC_INTERVAL_IN_SECONDS = SYNC_INTERVAL_IN_MINUTES * SECONDS_PER_MINUTE;
     private static final String CONTENT_AUTHORITY = ProjectContract.CONTENT_AUTHORITY;
     private static final String PREF_SETUP_COMPLETE = "setup_complete";
 
@@ -46,7 +49,7 @@ public class SyncUtils {
      *
      * @param context Context
      */
-    public static void CreateSyncAccount(Context context) {
+    public static void CreateSyncAccountAndSetSyncStrategy(Context context) {
         LOGD(TAG, "Creating sync account");
         boolean newAccount = false;
         boolean setupComplete = PreferenceManager
@@ -62,8 +65,9 @@ public class SyncUtils {
             ContentResolver.setSyncAutomatically(account, CONTENT_AUTHORITY, true);
             // Recommend a schedule for automatic synchronization. The system may modify this based
             // on other scheduled syncs and network utilization.
+            LOGI(TAG, "Periodic Sync scheduled to run every: " + SYNC_INTERVAL_IN_SECONDS + " seconds");
             ContentResolver.addPeriodicSync(
-                    account, CONTENT_AUTHORITY, new Bundle(), SYNC_FREQUENCY);
+                    account, CONTENT_AUTHORITY, new Bundle(), SYNC_INTERVAL_IN_SECONDS);
             newAccount = true;
         }
 
@@ -74,6 +78,7 @@ public class SyncUtils {
             TriggerRefresh();
             PreferenceManager.getDefaultSharedPreferences(context).edit()
                     .putBoolean(PREF_SETUP_COMPLETE, true).commit();
+            LOGI(TAG, "Account Setup Complete");
         }
     }
 
