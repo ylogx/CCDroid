@@ -1,4 +1,5 @@
 #Local scripts
+*.bak
 merge-all.sh
 
 .gradle
