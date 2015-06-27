@@ -19,9 +19,12 @@
  */
 package org.developfreedom.ccdroid.app;
 
+import android.accounts.Account;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
+import android.content.SyncStatusObserver;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -37,8 +40,10 @@ import android.widget.Toast;
 import org.developfreedom.ccdroid.app.controllers.ListViewController;
 import org.developfreedom.ccdroid.app.controllers.ProjectStorageController;
 import org.developfreedom.ccdroid.app.listeners.ListViewItemClickListener;
+import org.developfreedom.ccdroid.app.storage.ProjectContract;
 import org.developfreedom.ccdroid.app.storage.ProviderController;
-import org.developfreedom.ccdroid.app.tasks.DownloadXmlTask;
+import org.developfreedom.ccdroid.app.sync.GenericAccountService;
+import org.developfreedom.ccdroid.app.sync.SyncUtils;
 import org.developfreedom.ccdroid.app.utils.LogUtils;
 import org.developfreedom.ccdroid.app.utils.Utils;
 
@@ -68,6 +73,15 @@ public class MainActivity
     private Config config;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ProjectStorageController mProjectStorageController;
+    /**
+     * Handle to a SyncObserver. The ProgressBar element is visible until the SyncObserver reports
+     * that the sync is complete.
+     *
+     * <p>This allows us to delete our SyncObserver once the application is no longer in the
+     * foreground.
+     */
+    private Object mSyncObserverHandle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +98,10 @@ public class MainActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         config = new Config(this);
         mProjectStorageController = new ProviderController(getContentResolver());
+        SyncUtils.CreateSyncAccount(getApplicationContext());
     }
+
+
 
     @Override
     protected void onStart() {
@@ -99,6 +116,66 @@ public class MainActivity
         });
         refresh();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSyncStatusObserver.onStatusChanged(0);
+
+        // Watch for sync state changes
+        final int mask = ContentResolver.SYNC_OBSERVER_TYPE_PENDING |
+                ContentResolver.SYNC_OBSERVER_TYPE_ACTIVE;
+        mSyncObserverHandle = ContentResolver.addStatusChangeListener(mask, mSyncStatusObserver);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mSyncObserverHandle != null) {
+            ContentResolver.removeStatusChangeListener(mSyncObserverHandle);
+            mSyncObserverHandle = null;
+        }
+    }
+
+    /**
+     * Create a new anonymous SyncStatusObserver. It's attached to the app's ContentResolver in
+     * onResume(), and removed in onPause(). If status changes, it sets the state of the Refresh
+     * button. If a sync is active or pending, the Refresh button is replaced by an indeterminate
+     * ProgressBar; otherwise, the button itself is displayed.
+     */
+    private SyncStatusObserver mSyncStatusObserver = new SyncStatusObserver() {
+        /** Callback invoked with the sync adapter status changes. */
+        @Override
+        public void onStatusChanged(int which) {
+            runOnUiThread(new Runnable() {
+                /**
+                 * The SyncAdapter runs on a background thread. To update the UI, onStatusChanged()
+                 * runs on the UI thread.
+                 */
+                @Override
+                public void run() {
+                    // Create a handle to the account that was created by
+                    // SyncService.CreateSyncAccount(). This will be used to query the system to
+                    // see how the sync status has changed.
+                    Account account = GenericAccountService.GetAccount();
+                    if (account == null) {
+                        // GetAccount() returned an invalid value. This shouldn't happen, but
+                        // we'll set the status to "not refreshing".
+                        swipeRefreshLayout.setRefreshing(false);
+                        return;
+                    }
+
+                    // Test the ContentResolver to see if the sync adapter is active or pending.
+                    // Set the state of the refresh button accordingly.
+                    boolean syncActive = ContentResolver.isSyncActive(
+                            account, ProjectContract.CONTENT_AUTHORITY);
+                    boolean syncPending = ContentResolver.isSyncPending(
+                            account, ProjectContract.CONTENT_AUTHORITY);
+                    swipeRefreshLayout.setRefreshing(syncActive || syncPending);
+                }
+            });
+        }
+    };
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -171,8 +248,9 @@ public class MainActivity
         if (Utils.isOnline(this)) {
             // fetch data
             String projectUrl = config.getUrl();
-            DownloadXmlTask downloadXmlTask = new DownloadXmlTask(new ProjectParser(), this, mProjectStorageController);
-            downloadXmlTask.execute(projectUrl);
+            SyncUtils.TriggerRefresh();
+//            DownloadXmlTask downloadXmlTask = new DownloadXmlTask(new ProjectParser(), this, mProjectStorageController);
+//            downloadXmlTask.execute(projectUrl);
         } else {
             LOGI(TAG, "refresh: No Network");
             Toast.makeText(this, getString(R.string.toast_network_unavailable), Toast.LENGTH_SHORT).show();

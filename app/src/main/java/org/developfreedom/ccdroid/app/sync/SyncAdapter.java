@@ -102,12 +102,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         mContentResolver = context.getContentResolver();
     }
 
-    public SyncAdapter(Context context, boolean autoInitialize, ListViewController controller) {
-        super(context, autoInitialize);
-        this.mController = controller;
-        mContentResolver = context.getContentResolver();
-    }
-
     /**
      * Constructor. Obtains handle to content resolver for later use.
      */
