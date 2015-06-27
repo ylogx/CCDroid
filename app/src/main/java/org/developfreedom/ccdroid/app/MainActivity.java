@@ -247,10 +247,7 @@ public class MainActivity
         LOGD(TAG, "Refreshing");
         if (Utils.isOnline(this)) {
             // fetch data
-            String projectUrl = config.getUrl();
             SyncUtils.TriggerRefresh();
-//            DownloadXmlTask downloadXmlTask = new DownloadXmlTask(new ProjectParser(), this, mProjectStorageController);
-//            downloadXmlTask.execute(projectUrl);
         } else {
             LOGI(TAG, "refresh: No Network");
             Toast.makeText(this, getString(R.string.toast_network_unavailable), Toast.LENGTH_SHORT).show();
