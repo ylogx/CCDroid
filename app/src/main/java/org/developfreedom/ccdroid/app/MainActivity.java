@@ -167,14 +167,14 @@ public class MainActivity
 
     public void refresh() {
         swipeRefreshLayout.setRefreshing(true);
-        LOGV(TAG, "Refreshing");
+        LOGD(TAG, "Refreshing");
         if (Utils.isOnline(this)) {
             // fetch data
             String projectUrl = config.getUrl();
             DownloadXmlTask downloadXmlTask = new DownloadXmlTask(new ProjectParser(), this, mProjectStorageController);
             downloadXmlTask.execute(projectUrl);
         } else {
-            LOGV(TAG, "refresh: No Network");
+            LOGI(TAG, "refresh: No Network");
             Toast.makeText(this, getString(R.string.toast_network_unavailable), Toast.LENGTH_SHORT).show();
         }
     }
@@ -222,7 +222,7 @@ public class MainActivity
             LOGE(TAG, "Error: project list came empty");
             return;
         }
-        LOGV(TAG, "Starting listview update");
+        LOGD(TAG, "Starting listview update");
         SimpleAdapter adapter = getAdapterFor(projects);
 
         projectsListView = (ListView) findViewById(R.id.fragment_listview_projects);

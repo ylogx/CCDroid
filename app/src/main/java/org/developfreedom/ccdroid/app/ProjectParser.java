@@ -10,7 +10,7 @@ import java.net.URL;
 import java.util.List;
 
 import static org.developfreedom.ccdroid.app.utils.LogUtils.LOGD;
-import static org.developfreedom.ccdroid.app.utils.LogUtils.LOGV;
+import static org.developfreedom.ccdroid.app.utils.LogUtils.LOGI;
 
 public class ProjectParser {
     private static String TAG = LogUtils.makeLogTag(ProjectParser.class);
@@ -25,7 +25,7 @@ public class ProjectParser {
         List projectList = null;
 
         try {
-            LOGV(TAG, "Parsing " + url.toString());
+            LOGI(TAG, "Parsing " + url.toString());
             HttpURLConnection conn = openHttpGetConnection(url);
             // Convert the InputStream into a string
             is = conn.getInputStream();
@@ -51,7 +51,7 @@ public class ProjectParser {
         // Starts the query
         conn.connect();
         int response = conn.getResponseCode();
-        LOGV(TAG, "The response is: " + response);
+        LOGD(TAG, "The response is: " + response);
         return conn;
     }
 

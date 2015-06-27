@@ -35,6 +35,7 @@ import org.developfreedom.ccdroid.app.utils.Utils;
 
 import java.util.Map;
 
+import static org.developfreedom.ccdroid.app.utils.LogUtils.LOGD;
 import static org.developfreedom.ccdroid.app.utils.LogUtils.LOGV;
 
 public class ListViewItemClickListener implements AdapterView.OnItemClickListener {
@@ -49,7 +50,7 @@ public class ListViewItemClickListener implements AdapterView.OnItemClickListene
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-        LOGV(TAG, "Listview item clicked");
+        LOGD(TAG, "Listview item clicked");
         ListAdapter adapter = projectsListView.getAdapter();
         final Map<String, String> clickedItem = (Map<String, String>) adapter.getItem(position);
         final String url = clickedItem.get("url");

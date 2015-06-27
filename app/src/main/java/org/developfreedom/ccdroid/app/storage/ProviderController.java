@@ -73,8 +73,9 @@ public class ProviderController implements ProjectStorageController {
     public List<Project> get() {
         Cursor c = mResolver.query(ProjectContract.ProjectColumns.CONTENT_URI,
                 PROJECT_PROJECTIONS, null, null, null);
+        if (c == null) LOGW(TAG, "Cursor is null!");
         List<Project> projects = new ArrayList<>();
-        while (c.moveToNext()) {
+        while (c != null && c.moveToNext()) {
             String name = c.getString(PROJECTION_NAME_INDEX);
             String activity = c.getString(PROJECTION_ACTIVITY_INDEX);
             String label = c.getString(PROJECTION_LABEL_INDEX);
@@ -83,14 +84,14 @@ public class ProviderController implements ProjectStorageController {
             String url = c.getString(PROJECTION_URL_INDEX);
             Project project = new Project(name, activity, label, status, time, url);
             projects.add(project);
-            LOGD(TAG, "Project Queried: " + project.toString());
+            LOGV(TAG, "Project Queried: " + project.toString());
         }
         return projects;
     }
 
     @Override
     public void clear() {
-        LOGV(TAG, "Clearing database");
+        LOGD(TAG, "Clearing database");
         int delete = mResolver.delete(ProjectContract.ProjectColumns.CONTENT_URI, null, null);
         LOGI(TAG, "Deleted " + delete + " values");
     }
