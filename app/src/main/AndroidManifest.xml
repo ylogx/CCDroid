@@ -65,15 +65,14 @@
             <meta-data android:name="android.content.SyncAdapter"
                        android:resource="@xml/syncadapter"/>
         </service>
-        <service
-                android:name=".sync.AuthenticatorService">
+        <service android:name=".sync.GenericAccountService">
             <intent-filter>
-                <action android:name="android.accounts.AccountAuthenticator"/>
+                <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
-            <meta-data
-                    android:name="android.accounts.AccountAuthenticator"
-                    android:resource="@xml/authenticator"/>
+            <meta-data android:name="android.accounts.AccountAuthenticator"
+                       android:resource="@xml/authenticator" />
         </service>
+
     </application>
 
 </manifest>
