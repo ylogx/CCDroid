@@ -143,6 +143,7 @@ public class MainActivity
      * button. If a sync is active or pending, the Refresh button is replaced by an indeterminate
      * ProgressBar; otherwise, the button itself is displayed.
      */
+    private static boolean mListViewUpToDate = false;   //FIXME: Using static flag
     private SyncStatusObserver mSyncStatusObserver = new SyncStatusObserver() {
         /** Callback invoked with the sync adapter status changes. */
         @Override
@@ -171,7 +172,16 @@ public class MainActivity
                             account, ProjectContract.CONTENT_AUTHORITY);
                     boolean syncPending = ContentResolver.isSyncPending(
                             account, ProjectContract.CONTENT_AUTHORITY);
-                    swipeRefreshLayout.setRefreshing(syncActive || syncPending);
+                    boolean refreshing = syncActive || syncPending;
+                    LOGV(TAG, "SyncStatusObserver: " + refreshing);
+                    LOGV(TAG, "mLV Up to date: " + mListViewUpToDate);
+                    swipeRefreshLayout.setRefreshing(refreshing);
+                    if (!refreshing && !mListViewUpToDate) {
+                        updateListView();
+                        mListViewUpToDate = true;
+                    } else {
+                        mListViewUpToDate = false;
+                    }
                 }
             });
         }
@@ -287,6 +297,7 @@ public class MainActivity
 
     @Override
     public void updateListView() {
+        LOGD(TAG, "Updating listview with project storage data");
         updateListView(mProjectStorageController.get());
     }
 
@@ -297,20 +308,22 @@ public class MainActivity
             LOGE(TAG, "Error: project list came empty");
             return;
         }
-        LOGD(TAG, "Starting listview update");
-        SimpleAdapter adapter = getAdapterFor(projects);
+        LOGD(TAG, "Starting listview update. Next: Adapter update");
 
         projectsListView = (ListView) findViewById(R.id.fragment_listview_projects);
+        if (projectsListView != null) {
+            SimpleAdapter adapter = getAdapterFor(projects);
+            projectsListView.setAdapter(adapter);
+            LOGD(TAG, "Adapter set to projects listview has " + adapter.getCount() + " items");
 
-        projectsListView.setAdapter(adapter);
-        LOGD(TAG, "Adapter set to projects listview has " + adapter.getCount() + " items");
+            projectsListView.setOnItemClickListener(
+                    new ListViewItemClickListener(
+                            projectsListView,
+                            this
+                    )
+            );
+        }
 
-        projectsListView.setOnItemClickListener(
-                new ListViewItemClickListener(
-                        projectsListView,
-                        this
-                )
-        );
         if (swipeRefreshLayout != null && swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(false);
         }
