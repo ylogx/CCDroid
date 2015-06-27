@@ -1,5 +1,5 @@
-/**
- * CCDroid - An open source build monitor for Android
+/*
+ * MainActivity.java
  *
  * Copyright (c) 2015 Shubham Chaudhary <me@shubhamchaudhary.in>
  *
@@ -15,6 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with CCDroid.  If not, see <http://www.gnu.org/licenses/>.
+ *
  */
 package org.developfreedom.ccdroid.app;
 
@@ -34,7 +35,9 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import org.developfreedom.ccdroid.app.controllers.ListViewController;
+import org.developfreedom.ccdroid.app.controllers.ProjectStorageController;
 import org.developfreedom.ccdroid.app.listeners.ListViewItemClickListener;
+import org.developfreedom.ccdroid.app.storage.ProviderController;
 import org.developfreedom.ccdroid.app.tasks.DownloadXmlTask;
 import org.developfreedom.ccdroid.app.utils.LogUtils;
 import org.developfreedom.ccdroid.app.utils.Utils;
@@ -64,6 +67,7 @@ public class MainActivity
     private ListView projectsListView;
     private Config config;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private ProjectStorageController mProjectStorageController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,11 +83,13 @@ public class MainActivity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         config = new Config(this);
+        mProjectStorageController = new ProviderController(getContentResolver());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        updateListView();
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.main_swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -165,7 +171,7 @@ public class MainActivity
         if (Utils.isOnline(this)) {
             // fetch data
             String projectUrl = config.getUrl();
-            DownloadXmlTask downloadXmlTask = new DownloadXmlTask(this, new ProjectParser());
+            DownloadXmlTask downloadXmlTask = new DownloadXmlTask(new ProjectParser(), this, mProjectStorageController);
             downloadXmlTask.execute(projectUrl);
         } else {
             LOGV(TAG, "refresh: No Network");
@@ -204,6 +210,12 @@ public class MainActivity
         dialog.show();
     }
 
+    @Override
+    public void updateListView() {
+        updateListView(mProjectStorageController.get());
+    }
+
+    @Override
     public void updateListView(List<Project> projects) {
         if (projects == null) {
             Toast.makeText(this, getString(R.string.toast_unable_to_fetch_project_list), Toast.LENGTH_SHORT).show();
@@ -224,7 +236,9 @@ public class MainActivity
                         this
                 )
         );
-        swipeRefreshLayout.setRefreshing(false);
+        if (swipeRefreshLayout != null && swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     private SimpleAdapter getAdapterFor(List<Project> projects) {
