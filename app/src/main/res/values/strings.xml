@@ -17,5 +17,6 @@
     <string name="toast_network_unavailable">Network Unavailable</string>
     <string name="alert_title_details">Details</string>
     <string name="alert_button_open">Open</string>
+    <string name="settings_project_sync_account">Project Sync Account</string>
 
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ authenticator.xml
+  ~ syncadapter.xml
   ~
   ~ Copyright (c) 2015 Shubham Chaudhary <me@shubhamchaudhary.in>
   ~
@@ -18,9 +18,12 @@
   ~ along with CCDroid.  If not, see <http://www.gnu.org/licenses/>.
   ~
   -->
-<account-authenticator
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:accountType="developfreedom.org"
-        android:icon="@mipmap/ic_launcher"
-        android:smallIcon="@mipmap/ic_launcher"
-        android:label="@string/settings_project_sync_account"/>
+
+<sync-adapter xmlns:android="http://schemas.android.com/apk/res/android"
+              android:contentAuthority="com.example.android.network.sync.basicsyncadapter"
+              android:accountType="com.example.android.network.sync.basicsyncadapter"
+              android:userVisible="false"
+              android:supportsUploading="false"
+              android:allowParallelSyncs="false"
+              android:isAlwaysSyncable="true"
+        />
