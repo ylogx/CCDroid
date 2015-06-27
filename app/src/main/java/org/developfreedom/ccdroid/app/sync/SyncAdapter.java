@@ -26,7 +26,6 @@ import android.content.*;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.util.Log;
 import org.developfreedom.ccdroid.app.Config;
 import org.developfreedom.ccdroid.app.Project;
 import org.developfreedom.ccdroid.app.ProjectParser;
@@ -41,8 +40,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.util.List;
 
-import static org.developfreedom.ccdroid.app.utils.LogUtils.LOGD;
-import static org.developfreedom.ccdroid.app.utils.LogUtils.LOGI;
+import static org.developfreedom.ccdroid.app.utils.LogUtils.*;
 
 /**
  * Define a sync adapter for the app.
@@ -54,6 +52,7 @@ import static org.developfreedom.ccdroid.app.utils.LogUtils.LOGI;
  * SyncService.
  */
 public class SyncAdapter extends AbstractThreadedSyncAdapter {
+    private static final String TAG = makeLogTag(SyncAdapter.class);
     // Constants representing column positions from PROJECTION.
     public static final int COLUMN_ID = 0;
     public static final int COLUMN_PROJECT_ID = 1;
@@ -63,7 +62,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     public static final int COLUMN_STATUS = 5;
     public static final int COLUMN_TIME = 6;
     public static final int COLUMN_URL = 7;
-    private static final String TAG = SyncAdapter.class.getSimpleName();
     /**
      * URL to fetch content from during a sync.
      * <p/>
@@ -137,20 +135,21 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority,
                               ContentProviderClient provider, SyncResult syncResult) {
-        LOGI(TAG, "Beginning network synchronization");
+        LOGD(TAG, "Beginning network synchronization");
         try {
-            List<Project> projects = new ProjectParser().fetch(new URL(new Config(getContext()).getUrl()));
+            String feedUrl = new Config(getContext()).getUrl();
+            List<Project> projects = new ProjectParser().fetch(new URL(feedUrl));
             mController.updateListView(projects);
         } catch (MalformedURLException e) {
-            Log.wtf(TAG, "Feed URL is malformed", e);
+            LOGE(TAG, "Feed URL is malformed", e);
             syncResult.stats.numParseExceptions++;
             return;
         } catch (IOException e) {
-            Log.e(TAG, "Error reading from network: " + e.toString());
+            LOGE(TAG, "Error reading from network: " + e.toString());
             syncResult.stats.numIoExceptions++;
             return;
         }
-        LOGI(TAG, "Network synchronization complete");
+        LOGD(TAG, "Network synchronization complete");
     }
 
     /**

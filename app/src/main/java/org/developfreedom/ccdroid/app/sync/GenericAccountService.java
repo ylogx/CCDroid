@@ -29,11 +29,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
+
+import static org.developfreedom.ccdroid.app.utils.LogUtils.LOGI;
+import static org.developfreedom.ccdroid.app.utils.LogUtils.makeLogTag;
 
 public class GenericAccountService extends Service {
+    private static final String TAG = makeLogTag(GenericAccountService.class);
     public static final String ACCOUNT_NAME = "generic_account";
-    private static final String TAG = "GenericAccountService";
     private static final String ACCOUNT_TYPE = "org.developfreedom.ccdroid.app.project";
     private Authenticator mAuthenticator;
 
@@ -56,13 +58,13 @@ public class GenericAccountService extends Service {
 
     @Override
     public void onCreate() {
-        Log.i(TAG, "Service created");
+        LOGI(TAG, "Service created");
         mAuthenticator = new Authenticator(this);
     }
 
     @Override
     public void onDestroy() {
-        Log.i(TAG, "Service destroyed");
+        LOGI(TAG, "Service destroyed");
     }
 
     @Override

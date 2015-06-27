@@ -24,7 +24,9 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
+import static org.developfreedom.ccdroid.app.utils.LogUtils.LOGD;
 import static org.developfreedom.ccdroid.app.utils.LogUtils.LOGI;
+import static org.developfreedom.ccdroid.app.utils.LogUtils.makeLogTag;
 
 /**
  * Service to handle sync requests.
@@ -39,7 +41,7 @@ import static org.developfreedom.ccdroid.app.utils.LogUtils.LOGI;
  * OS on request.
  */
 public class SyncService extends Service {
-    private static final String TAG = SyncService.class.getSimpleName();
+    private static final String TAG = makeLogTag(SyncService.class);
 
     private static final Object sSyncAdapterLock = new Object();
     private static SyncAdapter sSyncAdapter = null;
@@ -53,6 +55,7 @@ public class SyncService extends Service {
         LOGI(TAG, "Service created");
         synchronized (sSyncAdapterLock) {
             if (sSyncAdapter == null) {
+                LOGD(TAG, "Creating new SyncAdapter");
                 sSyncAdapter = new SyncAdapter(getApplicationContext(), true);
             }
         }

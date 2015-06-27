@@ -29,13 +29,14 @@ import android.preference.PreferenceManager;
 import org.developfreedom.ccdroid.app.storage.ProjectContract;
 
 import static org.developfreedom.ccdroid.app.utils.LogUtils.LOGD;
+import static org.developfreedom.ccdroid.app.utils.LogUtils.makeLogTag;
 
 
 /**
  * Static helper methods for working with the sync framework.
  */
 public class SyncUtils {
-    private static final String TAG = SyncUtils.class.getSimpleName();
+    private static final String TAG = makeLogTag(SyncUtils.class);
     private static final long SYNC_FREQUENCY = 60 * 60;  // 1 hour (in seconds)
     private static final String CONTENT_AUTHORITY = ProjectContract.CONTENT_AUTHORITY;
     private static final String PREF_SETUP_COMPLETE = "setup_complete";
