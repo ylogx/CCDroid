@@ -32,9 +32,9 @@ import android.os.IBinder;
 import android.util.Log;
 
 public class GenericAccountService extends Service {
-    public static final String ACCOUNT_NAME = "sync";
+    public static final String ACCOUNT_NAME = "generic_account";
     private static final String TAG = "GenericAccountService";
-    private static final String ACCOUNT_TYPE = "org.developfreedom.ccdroid.app";
+    private static final String ACCOUNT_TYPE = "org.developfreedom.ccdroid.app.project";
     private Authenticator mAuthenticator;
 
     /**

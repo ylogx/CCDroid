@@ -20,7 +20,7 @@
   -->
 <account-authenticator
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:accountType="developfreedom.org"
+        android:accountType="org.developfreedom.ccdroid.app.project"
         android:icon="@mipmap/ic_launcher"
         android:smallIcon="@mipmap/ic_launcher"
         android:label="@string/settings_project_sync_account"/>
