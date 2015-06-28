@@ -29,6 +29,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.InputType;
 import android.view.*;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -159,7 +160,7 @@ public class MainActivity
         }
 
         if (item.getItemId() == R.id.action_add_url) {
-            show_add_url_dialog();
+            showAddUrlDialog();
         }
 
         return super.onOptionsItemSelected(item);
@@ -179,7 +180,7 @@ public class MainActivity
         }
     }
 
-    private void show_add_url_dialog() {
+    private void showAddUrlDialog() {
         // 1. Instantiate an AlertDialog.Builder with its constructor
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -188,6 +189,7 @@ public class MainActivity
                 .setTitle(R.string.dialog_title_add_url);
 
         final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_TEXT_VARIATION_URI);
         input.setText(config.getUrl());
         builder.setView(input);
 
