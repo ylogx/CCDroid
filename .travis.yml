@@ -27,6 +27,8 @@ android:
     # - openjdk7
     - oraclejdk7
 
+sudo: false
+
 env:
   - TERM=dumb
 
