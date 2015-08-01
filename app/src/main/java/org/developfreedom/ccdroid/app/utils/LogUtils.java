@@ -22,6 +22,7 @@ package org.developfreedom.ccdroid.app.utils;
 
 import android.util.Log;
 import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 
 public class LogUtils {
     private static final String LOG_PREFIX = "cc_";
@@ -44,47 +45,67 @@ public class LogUtils {
     }
 
     public static void LOGD(final String tag, String message) {
-        Crashlytics.getInstance().core.log(Log.DEBUG, tag, message);
+        if (Fabric.isInitialized())
+            Crashlytics.getInstance().core.log(Log.DEBUG, tag, message);
+        else
+            Log.d(tag, message);
     }
 
     public static void LOGD(final String tag, String message, Throwable cause) {
-        Crashlytics.getInstance().core.log(message);
+        if (Fabric.isInitialized())
+            Crashlytics.getInstance().core.log(message);
         Log.d(tag, message, cause);
     }
 
     public static void LOGV(final String tag, String message) {
-        Crashlytics.getInstance().core.log(Log.VERBOSE, tag, message);
+        if (Fabric.isInitialized())
+            Crashlytics.getInstance().core.log(Log.VERBOSE, tag, message);
+        else
+            Log.v(tag, message);
     }
 
     public static void LOGV(final String tag, String message, Throwable cause) {
-        Crashlytics.getInstance().core.log(message);
+        if (Fabric.isInitialized())
+            Crashlytics.getInstance().core.log(message);
         Log.v(tag, message, cause);
     }
 
     public static void LOGI(final String tag, String message) {
-        Crashlytics.getInstance().core.log(Log.INFO, tag, message);
+        if (Fabric.isInitialized())
+            Crashlytics.getInstance().core.log(Log.INFO, tag, message);
+        else
+            Log.i(tag, message);
     }
 
     public static void LOGI(final String tag, String message, Throwable cause) {
-        Crashlytics.getInstance().core.log(message);
+        if (Fabric.isInitialized())
+            Crashlytics.getInstance().core.log(message);
         Log.i(tag, message, cause);
     }
 
     public static void LOGW(final String tag, String message) {
-        Crashlytics.getInstance().core.log(Log.WARN, tag, message);
+        if (Fabric.isInitialized())
+            Crashlytics.getInstance().core.log(Log.WARN, tag, message);
+        else
+            Log.w(tag, message);
     }
 
     public static void LOGW(final String tag, String message, Throwable cause) {
-        Crashlytics.getInstance().core.log(message);
+        if (Fabric.isInitialized())
+            Crashlytics.getInstance().core.log(message);
         Log.w(tag, message, cause);
     }
 
     public static void LOGE(final String tag, String message) {
-        Crashlytics.getInstance().core.log(Log.ERROR, tag, message);
+        if (Fabric.isInitialized())
+            Crashlytics.getInstance().core.log(Log.ERROR, tag, message);
+        else
+            Log.e(tag, message);
     }
 
     public static void LOGE(final String tag, String message, Throwable cause) {
-        Crashlytics.getInstance().core.log(message);
+        if (Fabric.isInitialized())
+            Crashlytics.getInstance().core.log(message);
         Log.e(tag, message, cause);
     }
 
