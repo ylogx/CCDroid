@@ -1,5 +1,6 @@
 package org.developfreedom.ccdroid.app;
 
+import com.crashlytics.android.Crashlytics;
 import org.developfreedom.ccdroid.app.utils.LogUtils;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -33,6 +34,7 @@ public class ProjectParser {
             projectList = xmlFeedReader.parse(is);
             conn.disconnect();
         } catch (XmlPullParserException e) {
+            Crashlytics.logException(e);
             e.printStackTrace();
         } finally {
             if (is != null) {

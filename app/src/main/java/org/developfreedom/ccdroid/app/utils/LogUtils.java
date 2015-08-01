@@ -21,9 +21,10 @@
 package org.developfreedom.ccdroid.app.utils;
 
 import android.util.Log;
+import com.crashlytics.android.Crashlytics;
 
 public class LogUtils {
-    private static final String LOG_PREFIX = "ccdroid_";
+    private static final String LOG_PREFIX = "cc_";
     private static final int LOG_PREFIX_LENGTH = LOG_PREFIX.length();
     private static final int MAX_LOG_TAG_LENGTH = 23;
 
@@ -43,42 +44,47 @@ public class LogUtils {
     }
 
     public static void LOGD(final String tag, String message) {
-        Log.d(tag, message);
+        Crashlytics.getInstance().core.log(Log.DEBUG, tag, message);
     }
 
     public static void LOGD(final String tag, String message, Throwable cause) {
+        Crashlytics.getInstance().core.log(message);
         Log.d(tag, message, cause);
     }
 
     public static void LOGV(final String tag, String message) {
-        Log.v(tag, message);
+        Crashlytics.getInstance().core.log(Log.VERBOSE, tag, message);
     }
 
     public static void LOGV(final String tag, String message, Throwable cause) {
+        Crashlytics.getInstance().core.log(message);
         Log.v(tag, message, cause);
     }
 
     public static void LOGI(final String tag, String message) {
-        Log.i(tag, message);
+        Crashlytics.getInstance().core.log(Log.INFO, tag, message);
     }
 
     public static void LOGI(final String tag, String message, Throwable cause) {
+        Crashlytics.getInstance().core.log(message);
         Log.i(tag, message, cause);
     }
 
     public static void LOGW(final String tag, String message) {
-        Log.w(tag, message);
+        Crashlytics.getInstance().core.log(Log.WARN, tag, message);
     }
 
     public static void LOGW(final String tag, String message, Throwable cause) {
+        Crashlytics.getInstance().core.log(message);
         Log.w(tag, message, cause);
     }
 
     public static void LOGE(final String tag, String message) {
-        Log.e(tag, message);
+        Crashlytics.getInstance().core.log(Log.ERROR, tag, message);
     }
 
     public static void LOGE(final String tag, String message, Throwable cause) {
+        Crashlytics.getInstance().core.log(message);
         Log.e(tag, message, cause);
     }
 
