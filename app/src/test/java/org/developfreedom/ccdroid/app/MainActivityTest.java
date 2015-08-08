@@ -1,6 +1,7 @@
 package org.developfreedom.ccdroid.app;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -9,7 +10,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RuntimeEnvironment;
+import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
 import org.robolectric.util.ActivityController;
 
@@ -21,13 +24,13 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 @Ignore
-@RunWith(RobolectricTestRunner.class)
-@Config(reportSdk = 18)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP)
 public class MainActivityTest //extends FragmentTestCase<NavigationDrawerFragment>
 {
 
     private final ActivityController<MainActivity> controller = Robolectric.buildActivity(MainActivity.class);
-    private final Context context = Robolectric.application.getApplicationContext();
+    private final Context context = RuntimeEnvironment.application.getApplicationContext();
     protected MainActivity mainActivity;
 
     @Before
@@ -46,7 +49,7 @@ public class MainActivityTest //extends FragmentTestCase<NavigationDrawerFragmen
     }
 
     private void shadowApplicationContext() {
-        Robolectric.shadowOf(context);
+        Shadows.shadowOf(context);
     }
 
     @Test

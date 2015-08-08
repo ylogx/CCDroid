@@ -3,17 +3,19 @@ package org.developfreedom.ccdroid.app;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.shadows.ShadowPreferenceManager;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(RobolectricGradleTestRunner.class)
-@org.robolectric.annotation.Config(emulateSdk = 18)
+@org.robolectric.annotation.Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP)
 public class ConfigTest {
 
     private SharedPreferences sharedPreferences;
@@ -22,7 +24,7 @@ public class ConfigTest {
 
     @Before
     public void setUp() throws Exception {
-        Application application = Robolectric.application;
+        Application application = RuntimeEnvironment.application;
         Context context = application.getApplicationContext();
         sharedPreferences = ShadowPreferenceManager.getDefaultSharedPreferences(context);
         config = new Config(context);

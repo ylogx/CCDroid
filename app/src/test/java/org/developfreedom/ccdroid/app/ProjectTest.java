@@ -1,13 +1,15 @@
 package org.developfreedom.ccdroid.app;
 
+import android.os.Build;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(emulateSdk = 18)
+@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP)
 public class ProjectTest {
     @Test
     public void testNoArgsConstructorSetsAllToNull() throws Exception {

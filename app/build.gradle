@@ -51,7 +51,7 @@ dependencies {
     compile 'org.projectlombok:lombok:1.14.8'
 
     testCompile 'junit:junit:4.10'
-    testCompile 'org.robolectric:robolectric:2.4'
+    testCompile 'org.robolectric:robolectric:3.0'
     testCompile 'org.mockito:mockito-all:1.8.4'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.0@aar') {
         transitive = true;

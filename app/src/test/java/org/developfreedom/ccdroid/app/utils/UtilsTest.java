@@ -34,8 +34,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-//@RunWith(RobolectricGradleTestRunner.class)
-//@Config(emulateSdk = 18)
 public class UtilsTest {
     Context context;
 
