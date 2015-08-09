@@ -1,6 +1,7 @@
 #Local scripts
 *.bak
 merge-all.sh
+fabric.properties
 
 .gradle
 /local.properties
