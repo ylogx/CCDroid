@@ -11,8 +11,8 @@ android {
 
     defaultConfig {
         applicationId "org.developfreedom.ccdroid.app"
-        minSdkVersion 9
-        targetSdkVersion 22
+        minSdkVersion 15
+        targetSdkVersion 23
         versionCode 3
         versionName "0.0.3"
     }
