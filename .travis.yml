@@ -54,3 +54,6 @@ after_failure:
   - pwd && cd "${MY_LOG_DIR:-.}" && pwd && ls -al
   - sudo apt-get install -qq lynx && lynx --dump index.html > myIndex.log
   - for file in *.html; do echo "$file"; echo "====================="; lynx --dump $file; done || true
+
+notifications:
+  slack: ccdroid:WP68r2pSWhzTk7Ya2I94WAuT
