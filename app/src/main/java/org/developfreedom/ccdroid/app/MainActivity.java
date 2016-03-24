@@ -25,7 +25,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.*;
 import android.widget.EditText;
@@ -33,6 +33,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
 import io.fabric.sdk.android.Fabric;
 import org.developfreedom.ccdroid.app.controllers.ListViewController;
 import org.developfreedom.ccdroid.app.controllers.ProjectStorageController;
@@ -49,12 +50,8 @@ import java.util.List;
 import static org.developfreedom.ccdroid.app.utils.LogUtils.*;
 
 
-public class MainActivity
-        extends ActionBarActivity
-        implements
-        ListViewController {
-
-    private static String TAG = LogUtils.makeLogTag(MainActivity.class);
+public class MainActivity extends AppCompatActivity implements ListViewController {
+    private static final String TAG = makeLogTag(MainActivity.class);
     private ListView projectsListView;
     private Config config;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -63,7 +60,9 @@ public class MainActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
+        if (!BuildConfig.DEBUG) {
+            Fabric.with(this, new Crashlytics(), new Answers());
+        }
         setContentView(R.layout.activity_main);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -145,14 +144,14 @@ public class MainActivity
 
         // Add the buttons
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
+            @Override public void onClick(DialogInterface dialog, int id) {
                 // User clicked OK button
                 //TODO: Check input text to be a url
                 config.setUrl(input.getText().toString());
             }
         });
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
+            @Override public void onClick(DialogInterface dialog, int id) {
                 // User cancelled the dialog
             }
         });
