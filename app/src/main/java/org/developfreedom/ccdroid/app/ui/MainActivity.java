@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements ListViewControlle
             LOGE(TAG, "Error: project list came empty");
             return;
         }
+        if (listFragment == null) return;   // TODO: 25/03/16 Re-create
         listFragment.updateProjects(projects);
         if ((swipeRefreshLayout != null) && swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(false);
