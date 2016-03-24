@@ -33,7 +33,7 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import org.developfreedom.ccdroid.app.BuildConfig;
-import org.developfreedom.ccdroid.app.MainActivity;
+import org.developfreedom.ccdroid.app.ui.MainActivity;
 import org.developfreedom.ccdroid.app.R;
 import org.junit.Before;
 import org.junit.Ignore;

@@ -5,6 +5,7 @@ import android.os.Build;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import org.developfreedom.ccdroid.app.ui.MainActivity;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;

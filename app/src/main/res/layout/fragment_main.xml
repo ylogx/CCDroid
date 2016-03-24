@@ -5,16 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity$PlaceholderFragment">
+    tools:context=".ui.ProjectListFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/main_swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1.8"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/fragment_listview_projects"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
