@@ -5,6 +5,9 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
+def gitSha = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
+def buildTime = new Date().format("yyyy-MM-dd'T'HH:mm:ss'Z'", TimeZone.getTimeZone("UTC"))
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -15,6 +18,10 @@ android {
         targetSdkVersion 23
         versionCode 3
         versionName "0.0.3"
+
+        buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
+        buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     packagingOptions {
@@ -40,14 +47,19 @@ android {
     }
 }
 
+configurations.all {
+    resolutionStrategy.force "com.android.support:support-annotations:${android_support_lib_version}"
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 //    compile 'com.android.support:support-v4:22.2.1'
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:cardview-v7:23.2.1'
-    compile 'com.android.support:recyclerview-v7:23.2.1'
+    compile "com.android.support:support-annotations:${android_support_lib_version}"
+    compile "com.android.support:appcompat-v7:${android_support_lib_version}"
+    compile "com.android.support:cardview-v7:${android_support_lib_version}"
+    compile "com.android.support:recyclerview-v7:${android_support_lib_version}"
     compile 'org.projectlombok:lombok:1.14.8'
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') { transitive = true; }
+    compile("com.crashlytics.sdk.android:crashlytics:${crashlytics_version}") { transitive = true; }
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-all:1.10.19'
