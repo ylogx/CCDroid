@@ -69,8 +69,7 @@ public class ListViewItemClickListenerTest {
     private int position;
     private String url;
 
-    @Before
-    public void setUp() throws Exception {
+    @Before public void setUp() throws Exception {
         listView = mock(ListView.class);
         context = RuntimeEnvironment.application.getApplicationContext();
 //        listener = new ListViewItemClickListener(listView, context);
@@ -85,8 +84,7 @@ public class ListViewItemClickListenerTest {
         when(adapter.getItem(position)).thenReturn(itemMap);
     }
 
-    @Test
-    public void testShouldShowAlertDialog() throws Exception {
+    @Test public void testShouldShowAlertDialog() throws Exception {
 //        listener.onItemClick(mock(AdapterView.class), mock(View.class), position, 1);
 
         AlertDialog alertDialog = ShadowAlertDialog.getLatestAlertDialog();
@@ -99,8 +97,7 @@ public class ListViewItemClickListenerTest {
     }
 
     @Ignore
-    @Test
-    public void testShouldOpenUrl() throws Exception {
+    @Test public void testShouldOpenUrl() throws Exception {
         Activity activity = Robolectric.buildActivity(MainActivity.class).create().get();
 
 //        listener.onItemClick(mock(AdapterView.class), mock(View.class), position, 1);

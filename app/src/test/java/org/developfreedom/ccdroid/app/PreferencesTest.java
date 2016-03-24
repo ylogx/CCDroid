@@ -23,27 +23,21 @@ public class PreferencesTest {
     private Preferences preferences;
     private String dummyUrl;
 
-    @Before
-    public void setUp() throws Exception {
+    @Before public void setUp() throws Exception {
         Application application = RuntimeEnvironment.application;
         Context context = application.getApplicationContext();
         sharedPreferences = ShadowPreferenceManager.getDefaultSharedPreferences(context);
-        preferences = new Preferences(context);
+        preferences = new Preferences(sharedPreferences);
         dummyUrl = "https://ccdroid.github.io";
-
     }
 
-    @Test
-    public void testShouldGetUrl() throws Exception {
+    @Test public void testShouldGetUrl() throws Exception {
         sharedPreferences.edit().putString(Preferences.KEY_URL, dummyUrl).commit();
-
         assertThat(preferences.getUrl(), is(dummyUrl));
     }
 
-    @Test
-    public void testSetUrl() throws Exception {
+    @Test public void testSetUrl() throws Exception {
         preferences.setUrl(dummyUrl);
-
         assertThat(sharedPreferences.getString(Preferences.KEY_URL, dummyUrl), is(dummyUrl));
     }
 }

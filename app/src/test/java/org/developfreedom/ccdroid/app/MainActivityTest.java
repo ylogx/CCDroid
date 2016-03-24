@@ -13,7 +13,6 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.RuntimeEnvironment;
-import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
 import org.robolectric.util.ActivityController;
 
@@ -23,7 +22,6 @@ import java.util.List;
 import static butterknife.ButterKnife.findById;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 @Ignore
 @RunWith(RobolectricGradleTestRunner.class)
@@ -35,9 +33,7 @@ public class MainActivityTest //extends FragmentTestCase<NavigationDrawerFragmen
     private final Context context = RuntimeEnvironment.application.getApplicationContext();
     protected MainActivity mainActivity;
 
-    @Before
-    public void createMainActivity() {
-        shadowApplicationContext();
+    @Before public void createMainActivity() {
         mainActivity = controller.create().get();
         //mainActivity = controller.attach().create().get();
         //mainActivity.setContentView(R.layout.activity_main);
@@ -50,17 +46,7 @@ public class MainActivityTest //extends FragmentTestCase<NavigationDrawerFragmen
         //fragmentTransaction.commit();
     }
 
-    private void shadowApplicationContext() {
-        Shadows.shadowOf(context);
-    }
-
-    @Test
-    public void shouldEnsureTestsAreRunningFine() throws Exception {
-        assertTrue(true);
-    }
-
-    @Test
-    public void shouldUpdateListViewWithProperData() throws Exception {
+    @Test public void shouldUpdateListViewWithProperData() throws Exception {
         String name = "shubhamchaudhary/wordpowermadeeasy";
         String activity = "Sleeping";
         String lastBuildLabel = "31";
