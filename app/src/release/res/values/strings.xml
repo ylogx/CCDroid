@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="placeholder_name"/>
+    <string name="placeholder_activity"/>
+    <string name="placeholder_time"/>
+    <string name="placeholder_url"/>
+    <string name="placeholder_label"/>
+    <string name="placeholder_flag"/>
+</resources>

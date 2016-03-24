@@ -26,6 +26,7 @@ android {
 
     packagingOptions {
         exclude 'LICENSE'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
 
     buildTypes {
@@ -60,7 +61,10 @@ dependencies {
     compile "com.android.support:recyclerview-v7:${android_support_lib_version}"
     compile 'org.projectlombok:lombok:1.14.8'
     compile("com.crashlytics.sdk.android:crashlytics:${crashlytics_version}") { transitive = true; }
+    //View Injection
+    compile 'com.jakewharton:butterknife:7.0.1'
 
+    //Tests
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-all:1.10.19'
     testCompile "org.robolectric:robolectric:${robolectric_lib_version}"

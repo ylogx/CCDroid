@@ -34,7 +34,7 @@ public class ProjectListFragment extends Fragment {
     }
 
     public void updateProjects(List<Project> projects) {
-        adapter = new ProjectAdapter(projects);
+        adapter = new ProjectAdapter(projects, getFragmentManager());
         recyclerView.setAdapter(adapter);
     }
 }

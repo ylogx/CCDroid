@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/size10"
+        android:orientation="vertical">
+
+        <LinearLayout
+            style="@style/Widget.CCDroid.Details.Container">
+
+            <TextView
+                style="@style/Widget.CCDroid.Details.Key"
+                android:text="@string/name"/>
+
+            <TextView
+                android:id="@+id/details_project_name"
+                style="@style/Widget.CCDroid.Details.Value"
+                android:text="@string/placeholder_name"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/Widget.CCDroid.Details.Container">
+
+            <TextView
+                style="@style/Widget.CCDroid.Details.Key"
+                android:text="@string/time"/>
+
+            <TextView
+                android:id="@+id/details_project_time"
+                style="@style/Widget.CCDroid.Details.Value"
+                android:text="@string/placeholder_time"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/Widget.CCDroid.Details.Container">
+
+            <TextView
+                style="@style/Widget.CCDroid.Details.Key"
+                android:text="@string/url"/>
+
+            <TextView
+                android:id="@+id/details_project_url"
+                style="@style/Widget.CCDroid.Details.Value"
+                android:text="@string/placeholder_url"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/Widget.CCDroid.Details.Container">
+
+            <TextView
+                style="@style/Widget.CCDroid.Details.Key"
+                android:text="@string/label"/>
+
+            <TextView
+                android:id="@+id/details_project_label"
+                style="@style/Widget.CCDroid.Details.Value"
+                android:text="@string/placeholder_label"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/Widget.CCDroid.Details.Container">
+
+            <TextView
+                style="@style/Widget.CCDroid.Details.Key"
+                android:text="@string/activity"/>
+
+            <TextView
+                android:id="@+id/details_project_activity"
+                style="@style/Widget.CCDroid.Details.Value"
+                android:text="@string/placeholder_activity"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/details_project_open"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/alert_button_open"/>
+</LinearLayout>

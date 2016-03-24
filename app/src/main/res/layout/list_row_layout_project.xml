@@ -30,7 +30,7 @@
                 android:id="@+id/lw_project_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="shubhamchaudhary/wordpowermadeeasy (master) :: compile_test"
+                android:text="@string/placeholder_name"
                 android:textSize="16sp"/>
 
             <LinearLayout
@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_weight="1"
-                    android:text="Sleeping"
+                    android:text="@string/placeholder_activity"
                     android:textSize="12sp"/>
 
                 <TextView
@@ -55,7 +55,7 @@
                     android:gravity="end"
                     android:paddingEnd="10dp"
                     android:paddingRight="10dp"
-                    android:text="2015-05-15T11:32:34Z"
+                    android:text="@string/placeholder_time"
                     android:textSize="12sp"
                     />
             </LinearLayout>
