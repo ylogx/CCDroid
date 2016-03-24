@@ -16,6 +16,7 @@
             android:id="@+id/lw_status_flag"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_gravity="center"
             android:layout_margin="10dp"
             android:contentDescription="Status"
             android:src="@drawable/button_green"
@@ -24,17 +25,24 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/size5"
+            android:paddingLeft="@dimen/size3"
+            android:paddingRight="@dimen/size3"
+            android:paddingTop="@dimen/size5">
 
             <TextView
                 android:id="@+id/lw_project_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/placeholder_name"
-                android:textSize="16sp"/>
+                android:textColor="@color/font_color"
+                android:textSize="15sp"/>
 
             <LinearLayout
+                android:paddingTop="@dimen/size5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom">
