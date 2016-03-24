@@ -7,10 +7,30 @@ import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP)
 public class ProjectTest {
+    public static final String NAME = "Named";
+    public static final String ACTIVITY = "activities";
+    public static final String LABEL = "labels";
+    public static final String STATUS = "statuses";
+    public static final String TIME = "times";
+    public static final String WEB_URL = "http://shubham.chaudhary.xyz/blog";
+
+    public static Project getMockProject() {
+        Project project = mock(Project.class);
+        when(project.getName()).thenReturn(NAME);
+        when(project.getActivity()).thenReturn(ACTIVITY);
+        when(project.getLastBuildLabel()).thenReturn(LABEL);
+        when(project.getLastBuildStatus()).thenReturn(STATUS);
+        when(project.getLastBuildTime()).thenReturn(TIME);
+        when(project.getWebUrl()).thenReturn(WEB_URL);
+        return project;
+    }
+
     @Test public void testNoArgsConstructorSetsAllToNull() throws Exception {
         Project project = new Project();
 

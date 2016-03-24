@@ -19,9 +19,13 @@ import java.util.List;
  * @author Shubham Chaudhary on 8/9/15.
  */
 public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHolder> {
+    public static final String STATUS_SUCCESS = "Success";
+    public static final String STATUS_FAILURE = "Failure";
+    public static final String STATUS_UNKNOWN = "Unknown";
+    public static final String ACTIVITY_BUILDING = "Building";
     private static final int NORMAL_VIEW_TYPE = 0;
     private final List<Project> projects;
-    private FragmentManager fragmentManager;
+    private final FragmentManager fragmentManager;
 
     public ProjectAdapter(List<Project> projects, FragmentManager fragmentManager) {
         this.projects = projects;
@@ -38,15 +42,15 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
         return (viewType == NORMAL_VIEW_TYPE) ? new ViewHolder(v) : null;
     }
 
-    @Override public void onBindViewHolder(ViewHolder holder, final int position) {
-        Project project = projects.get(position);
+    @Override public void onBindViewHolder(ViewHolder holder, int position) {
+        final Project project = projects.get(position);
         holder.activity.setText(project.getActivity());
         holder.status.setTag(getDrawableId(project.getLastBuildStatus(), project.getActivity()));
         holder.name.setText(project.getName());
         holder.time.setText(project.getLastBuildTime());
         holder.clickContainer.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                DetailsDialog.newInstance(projects.get(position))
+                DetailsDialog.newInstance(project)
                         .show(fragmentManager, DetailsDialog.KEY_TAG);
             }
         });
@@ -60,14 +64,14 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
     private int getDrawableId(String lastBuildStatus, String activity) {
         int drawableId;
         switch (lastBuildStatus) {
-            case "Success":
+            case STATUS_SUCCESS:
                 drawableId = R.drawable.button_green;
                 break;
-            case "Failure":
+            case STATUS_FAILURE:
                 drawableId = R.drawable.button_red;
                 break;
-            case "Unknown":
-                if (activity.equals("Building")) {
+            case STATUS_UNKNOWN:
+                if (activity.equals(ACTIVITY_BUILDING)) {
                     drawableId = R.drawable.button_refresh;
                 } else {
                     drawableId = R.drawable.button_yellow;
