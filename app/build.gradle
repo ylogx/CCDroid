@@ -6,8 +6,8 @@ repositories {
 }
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "org.developfreedom.ccdroid.app"
@@ -35,10 +35,6 @@ android {
         }
     }
 
-    sourceSets {
-        androidTest.setRoot('src/test')
-    }
-
     testOptions {
         unitTests.returnDefaultValues = true
     }
@@ -47,14 +43,67 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 //    compile 'com.android.support:support-v4:22.2.1'
-    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:cardview-v7:23.2.1'
+    compile 'com.android.support:recyclerview-v7:23.2.1'
     compile 'org.projectlombok:lombok:1.14.8'
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') { transitive = true; }
 
-    testCompile 'junit:junit:4.10'
-    testCompile 'org.robolectric:robolectric:3.0'
-    testCompile 'org.mockito:mockito-all:1.8.4'
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.0@aar') {
-        transitive = true;
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-all:1.10.19'
+    testCompile "org.robolectric:robolectric:${robolectric_lib_version}"
+    testCompile "org.robolectric:robolectric-utils:${robolectric_lib_version}"
+    testCompile "org.robolectric:shadows-core:${robolectric_lib_version}"
+    testCompile "org.robolectric:shadows-support-v4:${robolectric_lib_version}"
+    testCompile "org.robolectric:shadows-multidex:${robolectric_lib_version}"
+    testCompile 'org.powermock:powermock-module-junit4:1.6.3'
+    testCompile 'org.powermock:powermock-module-junit4-rule:1.6.3'
+    testCompile 'org.powermock:powermock-api-mockito:1.6.3'
+    testCompile 'org.powermock:powermock-classloading-xstream:1.6.3'
+    testCompile 'com.squareup.assertj:assertj-android:1.1.1'
+    testCompile 'com.squareup.assertj:assertj-android-design:1.1.1@aar'
+    testCompile 'com.squareup.assertj:assertj-android-appcompat-v7:1.1.1@aar'
+    testCompile("com.squareup.assertj:assertj-android-support-v4:1.1.1@aar") {
+        exclude group: "com.android.support", module: "support-annotations"
+        exclude group: "com.android.support", module: "support-v4"
+    }
+
+    androidTestCompile 'com.android.support.test:runner:0.4.1'
+    androidTestCompile 'com.android.support.test:rules:0.4.1'
+    androidTestCompile 'org.hamcrest:hamcrest-library:1.3'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2.1') {
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude module: 'recyclerview-v7'
+    }
+}
+
+tasks.withType(Test) {
+    testLogging {
+        // set options for log level LIFECYCLE
+        events "passed", "skipped", "failed", "standardOut"
+        showExceptions true
+        exceptionFormat "short"
+        showCauses true
+        showStackTraces true
+
+        // set options for log level DEBUG and INFO
+        debug {
+            events "started", "passed", "skipped", "failed", "standardOut", "standardError"
+            exceptionFormat "full"
+        }
+        info.events = debug.events
+        info.exceptionFormat = debug.exceptionFormat
+
+        afterSuite { desc, result ->
+            if (!desc.parent) { // will match the outermost suite
+                def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)"
+                def startItem = '|  ', endItem = '  |'
+                def repeatLength = startItem.length() + output.length() + endItem.length()
+                println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
+            }
+        }
     }
 }
 
@@ -77,14 +126,15 @@ coveralls {
     jacocoReportPath 'build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml'
 }
 
-def coverageSourceDirs = [
-        'src/main/java',
-        'src/gen'
-]
-
 task jacocoTestReport(type: JacocoReport, dependsOn: "testDebug") {
     group = "Reporting"
     description = "Generate Jacoco coverage reports after running tests."
+
+    def coverageSourceDirs = [
+            'src/main/java',
+            'src/gen',
+            'build/generated/source/apt'
+    ]
     reports {
         html.enabled = true
         xml.enabled = true
