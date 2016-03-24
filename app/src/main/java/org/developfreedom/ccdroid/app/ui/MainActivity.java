@@ -47,6 +47,7 @@ import org.developfreedom.ccdroid.app.utils.Utils;
 
 import java.util.List;
 
+import static butterknife.ButterKnife.findById;
 import static org.developfreedom.ccdroid.app.utils.LogUtils.*;
 
 
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements ListViewControlle
     @Override protected void onStart() {
         super.onStart();
         updateListView();
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.main_swipe_refresh_layout);
+        swipeRefreshLayout = findById(this, R.id.main_swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override public void onRefresh() {
                 refresh();

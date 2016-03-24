@@ -20,6 +20,7 @@ import org.robolectric.util.ActivityController;
 import java.util.Collections;
 import java.util.List;
 
+import static butterknife.ButterKnife.findById;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -80,8 +81,8 @@ public class MainActivityTest //extends FragmentTestCase<NavigationDrawerFragmen
 
         ListView projectsListView = (ListView) getViewById(R.id.fragment_listview_projects);
         View view = getViewByPosition(projectsListView.getFirstVisiblePosition(), projectsListView);
-        TextView tw_name = (TextView) view.findViewById(R.id.lw_project_name);
-        assertThat(tw_name.getText().toString(), is(name));
+        TextView twName = findById(view, R.id.lw_project_name);
+        assertThat(twName.getText().toString(), is(name));
     }
 
     public View getViewByPosition(int pos, ListView listView) {

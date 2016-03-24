@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import org.developfreedom.ccdroid.app.Project;
 import org.developfreedom.ccdroid.app.R;
 
@@ -79,19 +81,15 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public View clickContainer;
-        public ImageView status;
-        public TextView name;
-        public TextView activity;
-        public TextView time;
+        @Bind(R.id.card_view) View clickContainer;
+        @Bind(R.id.lw_project_name) TextView name;
+        @Bind(R.id.lw_project_activity) TextView activity;
+        @Bind(R.id.lw_project_time) TextView time;
+        @Bind(R.id.lw_status_flag) ImageView status;
 
         public ViewHolder(View v) {
             super(v);
-            clickContainer = v.findViewById(R.id.card_view);
-            name = (TextView) v.findViewById(R.id.lw_project_name);
-            activity = (TextView) v.findViewById(R.id.lw_project_activity);
-            time = (TextView) v.findViewById(R.id.lw_project_time);
-            status = (ImageView) v.findViewById(R.id.lw_status_flag);
+            ButterKnife.bind(this, v);
         }
     }
 }
