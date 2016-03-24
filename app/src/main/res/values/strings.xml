@@ -18,4 +18,16 @@
     <string name="alert_title_details">Details</string>
     <string name="alert_button_open">Open</string>
 
+    <string name="name">Name</string>
+    <string name="time">Time</string>
+    <string name="url">URL</string>
+    <string name="label">Label</string>
+    <string name="activity">Activity</string>
+
+    <string name="placeholder_name">shubhamchaudhary/wordpowermadeeasy (master) :: compile_test</string>
+    <string name="placeholder_activity">Sleeping</string>
+    <string name="placeholder_time">2015–05-15T11:32:34Z</string>
+    <string name="placeholder_url">https://travis-ci.org/shubhamchaudhary/CCDroid</string>
+    <string name="placeholder_label">55</string>
+    <string name="placeholder_flag">2130837559</string>
 </resources>

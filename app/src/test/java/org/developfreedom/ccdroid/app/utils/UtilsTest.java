@@ -37,13 +37,11 @@ import static org.mockito.Mockito.when;
 public class UtilsTest {
     Context context;
 
-    @Before
-    public void setUp() throws Exception {
+    @Before public void setUp() throws Exception {
         context = mock(Context.class);
     }
 
-    @Test
-    public void testShouldOpenUrl() throws Exception {
+    @Test public void testShouldOpenUrl() throws Exception {
         //Activity activity = Robolectric.buildActivity(MainActivity.class).create().get();
         String url = "https://ccdroid.github.io";
 
@@ -61,8 +59,7 @@ public class UtilsTest {
 */
     }
 
-    @Test
-    public void testShouldReturnFalseIfNetworkDisconnected() throws Exception {
+    @Test public void testShouldReturnFalseIfNetworkDisconnected() throws Exception {
         ConnectivityManager connectivityManager = mock(ConnectivityManager.class);
         when(context.getSystemService(Context.CONNECTIVITY_SERVICE)).thenReturn(connectivityManager);
         when(connectivityManager.getActiveNetworkInfo()).thenReturn(null);
@@ -72,8 +69,7 @@ public class UtilsTest {
         assertThat(online, is(false));
     }
 
-    @Test
-    public void testShouldReturnTrueIfNetworkConnected() throws Exception {
+    @Test public void testShouldReturnTrueIfNetworkConnected() throws Exception {
         ConnectivityManager connectivityManager = mock(ConnectivityManager.class);
         when(context.getSystemService(Context.CONNECTIVITY_SERVICE)).thenReturn(connectivityManager);
         NetworkInfo networkInfo = mock(NetworkInfo.class);

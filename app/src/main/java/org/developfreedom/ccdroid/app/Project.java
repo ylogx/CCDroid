@@ -5,11 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor(suppressConstructorProperties = true)
-public class Project {
+public class Project implements Serializable {
     private String name;
     private String activity;
     private String lastBuildLabel;
