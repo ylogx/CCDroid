@@ -42,7 +42,7 @@
 
         <provider
                 android:name=".storage.ProjectProvider"
-                android:authorities="org.developfreedom.ccdroid.app"
+                android:authorities="${applicationId}"
                 android:enabled="true"
                 android:exported="true">
         </provider>
